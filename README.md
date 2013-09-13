@@ -32,19 +32,19 @@ gh = Greenhouse::API.new
 
 A default organization can be passed through an options hash:
 ```ruby
-gh = Greenhouse::API.new("api_token", { :organization => "your_organization" })
+gh = Greenhouse::API.new("api_token", :organization => "your_organization")
 ```
 
 ### Fetching Office Data
 ```ruby
 gh.offices
-gh.offices({ :organization => 'different_organization' })
+gh.offices(:organization => 'different_organization')
 # returns a hash containing all of the organization's department and jobs grouped by office
 ```
 
 ```ruby
 gh.office(officeID)
-gh.office(officeID, { :organization => 'different_organization' })
+gh.office(officeID, :organization => 'different_organization')
 # returns a hash containing the departments and jobs of a specific office
 ```
 

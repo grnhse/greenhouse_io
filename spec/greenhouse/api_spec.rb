@@ -9,7 +9,7 @@ describe Greenhouse::API do
   context "given a Greenhouse::API client" do
 
     before do
-      @client = Greenhouse::API.new('123FakeToken', { organization: 'testOrganization' })
+      @client = Greenhouse::API.new('123FakeToken', organization: 'testOrganization')
     end
 
     describe "#initialize" do
