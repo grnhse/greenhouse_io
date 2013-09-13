@@ -1,17 +1,22 @@
 module Greenhouse
   class Error < StandardError
-    attr_reader :code
+    attr_reader :msg, :code
 
-    def initialize(code)
+    def initialize(msg = nil, code = nil)
+      @msg = msg
       @code = code
     end
 
     def inspect
-      "Greenhouse::Error #{ @code } RESPONSE"
+      if @code
+        "Greenhouse::Error: #{ @code } response from server"
+      else
+        "Greenhouse::Error: #{ @msg }"
+      end
     end
 
     def message
-      "An error has occured. Error Code: #{ @code }"
+      @msg
     end
   end
 end

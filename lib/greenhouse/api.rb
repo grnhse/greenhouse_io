@@ -42,7 +42,8 @@ module Greenhouse
     private
 
     def query_organization(options_hash)
-      options_hash[:organization] || @organization
+      org = options_hash[:organization] || @organization
+      org.nil? ? (raise Greenhouse::Error.new("organization can't be blank")) : org
     end
 
     def get_response_hash(url)
