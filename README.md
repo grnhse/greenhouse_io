@@ -76,7 +76,10 @@ gh.job(jobID, :organization => 'different_organization')
 This is the only API method that **requires** an API token from Greenhouse
 ```ruby
 gh.apply_to_job(form_parameter_hash)
-# there should be a hidden input with name id in your form that has the value of the job ID on Greenhouse.io
+
+# form_parameter_hash should match the questions array of a given job opening
+# there should be a hidden input with name id in your form that
+# has the value of the job ID on Greenhouse.io
 ```
 
 ## Contributing
