@@ -48,6 +48,30 @@ gh.office(officeID, :organization => 'different_organization')
 # returns a hash containing the departments and jobs of a specific office
 ```
 
+### Fetching Department Data
+```ruby
+gh.departments
+gh.departments(:organization => 'different_organizaton')
+```
+
+```ruby
+gh.department(departmentID)
+gh.department(departmentID, :organization => 'different_organization')
+```
+
+### Fetching Job Data
+```ruby
+gh.jobs
+gh.jobs(:organization => 'different_organization')
+```
+
+```ruby
+gh.job(jobID)
+gh.job(jobID, :questions => true)
+# returns the specified job and the array of questions on the application
+gh.job(jobID, :organization => 'different_organization')
+```
+
 ## Contributing
 
 1. Fork it

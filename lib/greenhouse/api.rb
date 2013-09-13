@@ -30,8 +30,8 @@ module Greenhouse
       get_response_hash("/boards/#{ query_organization(options) }/embed/jobs")
     end
 
-    def job(id, options = {})
-      get_response_hash("/boards/#{ query_organization(options) }/embed/job?id=#{ id }")
+    def job(id, options = { :questions => false })
+      get_response_hash("/boards/#{ query_organization(options) }/embed/job?id=#{ id }&questions=#{ options[:questions] }")
     end
 
     private
