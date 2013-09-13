@@ -34,6 +34,11 @@ module Greenhouse
       get_response_hash("/boards/#{ query_organization(options) }/embed/job?id=#{ id }&questions=#{ options[:questions] }")
     end
 
+    def apply_to_job(job_form_hash)
+      options = { :body => job_form_hash, :basic_auth => basic_auth }
+      self.class.post('/applications', options)
+    end
+
     private
 
     def query_organization(options_hash)
@@ -47,6 +52,10 @@ module Greenhouse
       else
         Greenhouse::Error.new(response.code)
       end
+    end
+
+    def basic_auth
+      { :username => @api_token }
     end
 
   end
