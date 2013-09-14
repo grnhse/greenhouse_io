@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'greenhouse/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "greenhouse"
+  spec.name          = "greenhouse-io"
   spec.version       = Greenhouse::VERSION
   spec.authors       = ["Adrian Bautista"]
   spec.email         = ["adrianbautista8@gmail.com"]

@@ -8,7 +8,7 @@ API.
 
 Add this line to your application's Gemfile:
 
-    gem 'greenhouse'
+    gem 'greenhouse-io'
 
 And then execute:
 
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install greenhouse
+    $ gem install greenhouse-io
 
 ## Usage
 
