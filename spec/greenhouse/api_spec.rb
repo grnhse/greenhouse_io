@@ -88,6 +88,21 @@ describe Greenhouse::API do
       end
     end
 
+    describe "#apply_to_job" do
+      it "posts an application to a specified job" do
+        VCR.use_cassette('apply_to_job') do
+          expect(@client.apply_to_job(
+            {
+              :id => 721,
+              :first_name => 'Richard',
+              :last_name => 'Feynman',
+              :email => 'richard123@test.ga.co'
+            }
+          )).to_not be_nil
+        end
+      end
+    end
+
   end
 
 end
