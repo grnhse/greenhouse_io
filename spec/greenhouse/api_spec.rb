@@ -28,6 +28,13 @@ describe Greenhouse::API do
       end
     end
 
+    context "when an organization has not been set" do
+      it "raises an 'organization can't be blank' error" do
+        no_org_client = Greenhouse::API.new
+        expect{no_org_client.offices}.to raise_error(Greenhouse::Error)
+      end
+    end
+
     describe "#offices" do
       it "grabs the latest jobs and departments for an organization by each office" do
         VCR.use_cassette('offices') do
