@@ -31,14 +31,33 @@ describe Greenhouse::API do
     context "when an organization has not been set" do
       it "raises an 'organization can't be blank' error" do
         no_org_client = Greenhouse::API.new
-        expect{no_org_client.offices}.to raise_error(Greenhouse::Error)
+        expect{ no_org_client.offices }.to raise_error(Greenhouse::Error)
+      end
+    end
+
+    context "when an invalid organization is used" do
+      it "raises an HTTP Error" do
+        VCR.use_cassette('invalid_organization') do
+          invalid_org_client = Greenhouse::API.new(nil, organization: 'not-real-inc')
+          expect{ invalid_org_client.offices }.to raise_error(Greenhouse::Error)
+        end
+      end
+    end
+
+    context "when an invalid id is used" do
+      it "raises an HTTP Error" do
+        VCR.use_cassette('invalid_id') do
+          expect{ @client.job(123) }.to raise_error(Greenhouse::Error)
+        end
       end
     end
 
     describe "#offices" do
       it "grabs the latest jobs and departments for an organization by each office" do
         VCR.use_cassette('offices') do
-          expect(@client.offices).to_not be_nil
+          offices_hash_response = @client.offices
+          expect(offices_hash_response).to_not be_nil
+          expect(offices_hash_response[:offices]).to be_an_instance_of(Array)
         end
       end
     end
@@ -46,7 +65,11 @@ describe Greenhouse::API do
     describe "#office" do
       it "grabs the latest jobs and deparments for a specific office" do
         VCR.use_cassette('office') do
-          expect(@client.office(0)).to_not be_nil
+          office_hash_response = @client.office(0)
+          expect(office_hash_response).to_not be_nil
+          expect(office_hash_response).to include(:id => 0)
+          expect(office_hash_response).to include(:name => 'No Office')
+          expect(office_hash_response[:departments]).to be_an_instance_of(Array)
         end
       end
     end
@@ -54,7 +77,9 @@ describe Greenhouse::API do
     describe "#departments" do
       it "returns a list of an organization's departments and jobs" do
         VCR.use_cassette('departments') do
-          expect(@client.departments).to_not be_nil
+          departments_hash_response = @client.departments
+          expect(departments_hash_response).to_not be_nil
+          expect(departments_hash_response[:departments]).to be_an_instance_of(Array)
         end
       end
     end
@@ -62,7 +87,11 @@ describe Greenhouse::API do
     describe "#department" do
       it "returns a list of jobs for a specific department" do
         VCR.use_cassette('department') do
-          expect(@client.department(187)).to_not be_nil
+          department_hash_response = @client.department(187)
+          expect(department_hash_response).to_not be_nil
+          expect(department_hash_response).to include(:id => 187)
+          expect(department_hash_response).to include(:name => 'Engineering')
+          expect(department_hash_response[:jobs]).to be_an_instance_of(Array)
         end
       end
     end
@@ -70,13 +99,18 @@ describe Greenhouse::API do
     describe "#jobs" do
       it "returns the list of all jobs" do
         VCR.use_cassette('jobs') do
-          expect(@client.jobs).to_not be_nil
+          jobs_hash_response = @client.jobs
+          expect(jobs_hash_response).to_not be_nil
+          expect(jobs_hash_response[:jobs]).to be_an_instance_of(Array)
         end
       end
 
       it "returns a list of jobs and their job descriptions" do
         VCR.use_cassette('jobs_with_content') do
-          expect(@client.jobs(:content => true)).to_not be_nil
+          jobs_description_hash_response = @client.jobs(:content => true)
+          expect(jobs_description_hash_response).to_not be_nil
+          expect(jobs_description_hash_response[:jobs]).to be_an_instance_of(Array)
+          expect(jobs_description_hash_response[:jobs].first).to include(:content)
         end
       end
     end
@@ -84,13 +118,20 @@ describe Greenhouse::API do
     describe "#job" do
       it "returns the details for a specific job by ID" do
         VCR.use_cassette('job') do
-          expect(@client.job(721)).to_not be_nil
+          job_hash_response = @client.job(721)
+          expect(job_hash_response).to_not be_nil
+          expect(job_hash_response).to include(:id => 721)
+          expect(job_hash_response).to include(:content)
         end
       end
 
       it "returns the details for a specific job and its application questions" do
         VCR.use_cassette('job_with_questions') do
-          expect(@client.job(721, :questions => true)).to_not be_nil
+          job_with_questions_hash_response = @client.job(721, :questions => true)
+          expect(job_with_questions_hash_response).to_not be_nil
+          expect(job_with_questions_hash_response).to include(:id => 721)
+          expect(job_with_questions_hash_response).to include(:content)
+          expect(job_with_questions_hash_response[:questions]).to be_an_instance_of(Array)
         end
       end
     end
@@ -98,14 +139,16 @@ describe Greenhouse::API do
     describe "#apply_to_job" do
       it "posts an application to a specified job" do
         VCR.use_cassette('apply_to_job') do
-          expect(@client.apply_to_job(
-            {
-              :id => 721,
-              :first_name => 'Richard',
-              :last_name => 'Feynman',
-              :email => 'richard123@test.ga.co'
-            }
-          )).to_not be_nil
+            apply_to_job = @client.apply_to_job(
+              {
+                :id => 721,
+                :first_name => 'Richard',
+                :last_name => 'Feynman',
+                :email => 'richard123@test.ga.co'
+              }
+            )
+          expect(apply_to_job).to_not be_nil
+          expect(apply_to_job).to include(:success => 'Candidate saved successfully')
         end
       end
     end

@@ -36,7 +36,7 @@ module Greenhouse
 
     def apply_to_job(job_form_hash)
       options = { :body => job_form_hash, :basic_auth => basic_auth }
-      self.class.post('/applications', options)
+      post_response_hash('/applications', options)
     end
 
     private
@@ -51,7 +51,16 @@ module Greenhouse
       if response.code == 200
         MultiJson.load(response.body, :symbolize_keys => true)
       else
-        Greenhouse::Error.new(response.code)
+        raise Greenhouse::Error.new(response.code)
+      end
+    end
+
+    def post_response_hash(url, options)
+      response = self.class.post(url, options)
+      if response.code == 200
+        response.include?("success") ? MultiJson.load(response.body, :symbolize_keys => true) : raise(Greenhouse::Error.new(response["reason"]))
+      else
+        raise Greenhouse::Error.new(response.code)
       end
     end
 
