@@ -68,6 +68,8 @@ gh.department(departmentID, :organization => 'different_organization')
 ### Fetching Job Data
 ```ruby
 gh.jobs
+gh.jobs(:content => 'true')
+# includes the job description in the response
 gh.jobs(:organization => 'different_organization')
 ```
 
