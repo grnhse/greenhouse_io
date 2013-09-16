@@ -1,5 +1,8 @@
 # Greenhouse
 
+[![Build
+Status](https://travis-ci.org/adrianbautista/greenhouse.png)](https://travis-ci.org/adrianbautista/greenhouse)
+
 A Ruby interface to
 [Greenhouse.io's](https://app.greenhouse.io/jobboard/jsonp_instructions)
 API.
