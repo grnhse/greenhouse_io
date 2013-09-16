@@ -2,9 +2,9 @@
 
 [![Gem
 Version](https://badge.fury.io/rb/greenhouse-io.png)](http://badge.fury.io/rb/greenhouse-io)
-
 [![Build
 Status](https://travis-ci.org/adrianbautista/greenhouse.png)](https://travis-ci.org/adrianbautista/greenhouse)
+[![Coverage Status](https://coveralls.io/repos/adrianbautista/greenhouse/badge.png)](https://coveralls.io/r/adrianbautista/greenhouse)
 
 A Ruby interface to
 [Greenhouse.io's](https://app.greenhouse.io/jobboard/jsonp_instructions)
