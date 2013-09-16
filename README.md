@@ -1,5 +1,8 @@
 # Greenhouse
 
+[![Gem
+Version](https://badge.fury.io/rb/greenhouse-io.png)](http://badge.fury.io/rb/greenhouse-io)
+
 [![Build
 Status](https://travis-ci.org/adrianbautista/greenhouse.png)](https://travis-ci.org/adrianbautista/greenhouse)
 
