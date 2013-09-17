@@ -151,6 +151,34 @@ describe Greenhouse::API do
           expect(apply_to_job).to include(:success => 'Candidate saved successfully')
         end
       end
+
+      it "errors when missing required fields" do
+        VCR.use_cassette('invalid_application') do
+          expect {
+            @client.apply_to_job(
+              {
+                :id => 721,
+                :question_2720 => 'not_required'
+              }
+            )
+          }.to raise_error(Greenhouse::Error)
+        end
+      end
+
+      it "errors when given an invalid ID" do
+        VCR.use_cassette('invalid_application_id') do
+          expect {
+            @client.apply_to_job(
+              {
+                :id => 456,
+                :first_name => 'Gob',
+                :last_name => 'Bluth',
+                :email => 'gob@bluth.com'
+              }
+            )
+          }.to raise_error(Greenhouse::Error)
+        end
+      end
     end
 
   end
