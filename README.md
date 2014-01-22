@@ -1,4 +1,4 @@
-# Greenhouse
+# Greenhouse IO
 
 [![Gem
 Version](https://badge.fury.io/rb/greenhouse_io.png)](http://badge.fury.io/rb/greenhouse_io)

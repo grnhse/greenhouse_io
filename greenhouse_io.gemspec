@@ -17,8 +17,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency('httparty')
+  spec.add_dependency('httmultiparty')
   spec.add_dependency('multi_json', '~> 1.8.0')
+  spec.required_ruby_version = '>= 1.9.3'
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

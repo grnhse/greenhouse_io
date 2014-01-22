@@ -2,7 +2,7 @@ module GreenhouseIo
   class API
     attr_accessor :api_token, :organization
 
-    include HTTParty
+    include HTTMultiParty
     base_uri 'https://api.greenhouse.io/v1'
 
     def initialize(api_token = nil, default_options = {})
