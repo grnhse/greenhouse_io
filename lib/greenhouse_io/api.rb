@@ -1,4 +1,4 @@
-module Greenhouse
+module GreenhouseIo
   class API
     attr_accessor :api_token, :organization
 
@@ -43,7 +43,7 @@ module Greenhouse
 
     def query_organization(options_hash)
       org = options_hash[:organization] || @organization
-      org.nil? ? (raise Greenhouse::Error.new("organization can't be blank")) : org
+      org.nil? ? (raise GreenhouseIo::Error.new("organization can't be blank")) : org
     end
 
     def get_response_hash(url)
@@ -51,16 +51,16 @@ module Greenhouse
       if response.code == 200
         MultiJson.load(response.body, :symbolize_keys => true)
       else
-        raise Greenhouse::Error.new(response.code)
+        raise GreenhouseIo::Error.new(response.code)
       end
     end
 
     def post_response_hash(url, options)
       response = self.class.post(url, options)
       if response.code == 200
-        response.include?("success") ? MultiJson.load(response.body, :symbolize_keys => true) : raise(Greenhouse::Error.new(response["reason"]))
+        response.include?("success") ? MultiJson.load(response.body, :symbolize_keys => true) : raise(GreenhouseIo::Error.new(response["reason"]))
       else
-        raise Greenhouse::Error.new(response.code)
+        raise GreenhouseIo::Error.new(response.code)
       end
     end
 

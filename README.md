@@ -28,17 +28,17 @@ Or install it yourself as:
 
 Creating an instance of the API client:
 ```ruby
-gh = Greenhouse::API.new("api_token")
+gh = GreenhouseIo::API.new("api_token")
 ```
 
 The client will also use the environment variable `'GREENHOUSE_API_TOKEN'` by default:
 ```ruby
-gh = Greenhouse::API.new
+gh = GreenhouseIo::API.new
 ```
 
 A default organization can be passed through an options hash:
 ```ruby
-gh = Greenhouse::API.new("api_token", :organization => "your_organization")
+gh = GreenhouseIo::API.new("api_token", :organization => "your_organization")
 ```
 
 ### Fetching Office Data

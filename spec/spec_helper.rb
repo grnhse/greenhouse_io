@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler'
 require 'webmock/rspec'
 require 'vcr'
-require 'greenhouse'
+require 'greenhouse_io'
 
 require 'coveralls'
 Coveralls.wear!

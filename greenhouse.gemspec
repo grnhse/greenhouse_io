@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'greenhouse/version'
+require 'greenhouse_io/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "greenhouse-io"
-  spec.version       = Greenhouse::VERSION
+  spec.name          = "greenhouse_io"
+  spec.version       = GreenhouseIo::VERSION
   spec.authors       = ["Adrian Bautista"]
   spec.email         = ["adrianbautista8@gmail.com"]
   spec.description   = %q{A Ruby based wrapper for Greenhouse.io API}

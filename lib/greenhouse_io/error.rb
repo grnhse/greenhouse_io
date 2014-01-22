@@ -1,4 +1,4 @@
-module Greenhouse
+module GreenhouseIo
   class Error < StandardError
     attr_reader :msg, :code
 
@@ -9,9 +9,9 @@ module Greenhouse
 
     def inspect
       if @code
-        "Greenhouse::Error: #{ @code } response from server"
+        "GreenhouseIo::Error: #{ @code } response from server"
       else
-        "Greenhouse::Error: #{ @msg }"
+        "GreenhouseIo::Error: #{ @msg }"
       end
     end
 

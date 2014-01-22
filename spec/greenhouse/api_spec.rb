@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Greenhouse::API do
+describe GreenhouseIo::API do
 
   it "should have a base url for an API endpoint" do
-    expect(Greenhouse::API.base_uri).to eq("https://api.greenhouse.io/v1")
+    expect(GreenhouseIo::API.base_uri).to eq("https://api.greenhouse.io/v1")
   end
 
-  context "given a Greenhouse::API client" do
+  context "given a GreenhouseIo::API client" do
 
     before do
-      @client = Greenhouse::API.new('123FakeToken', organization: 'generalassembly')
+      @client = GreenhouseIo::API.new('123FakeToken', organization: 'generalassembly')
     end
 
     describe "#initialize" do
@@ -23,23 +23,23 @@ describe Greenhouse::API do
 
       it "uses an enviroment variable when token is not specified" do
         ENV['GREENHOUSE_API_TOKEN'] = '123FakeENV'
-        default_client = Greenhouse::API.new
+        default_client = GreenhouseIo::API.new
         expect(default_client.api_token).to eq('123FakeENV')
       end
     end
 
     context "when an organization has not been set" do
       it "raises an 'organization can't be blank' error" do
-        no_org_client = Greenhouse::API.new
-        expect{ no_org_client.offices }.to raise_error(Greenhouse::Error)
+        no_org_client = GreenhouseIo::API.new
+        expect{ no_org_client.offices }.to raise_error(GreenhouseIo::Error)
       end
     end
 
     context "when an invalid organization is used" do
       it "raises an HTTP Error" do
         VCR.use_cassette('invalid_organization') do
-          invalid_org_client = Greenhouse::API.new(nil, organization: 'not-real-inc')
-          expect{ invalid_org_client.offices }.to raise_error(Greenhouse::Error)
+          invalid_org_client = GreenhouseIo::API.new(nil, organization: 'not-real-inc')
+          expect{ invalid_org_client.offices }.to raise_error(GreenhouseIo::Error)
         end
       end
     end
@@ -47,7 +47,7 @@ describe Greenhouse::API do
     context "when an invalid id is used" do
       it "raises an HTTP Error" do
         VCR.use_cassette('invalid_id') do
-          expect{ @client.job(123) }.to raise_error(Greenhouse::Error)
+          expect{ @client.job(123) }.to raise_error(GreenhouseIo::Error)
         end
       end
     end
@@ -161,7 +161,7 @@ describe Greenhouse::API do
                 :question_2720 => 'not_required'
               }
             )
-          }.to raise_error(Greenhouse::Error)
+          }.to raise_error(GreenhouseIo::Error)
         end
       end
 
@@ -176,7 +176,7 @@ describe Greenhouse::API do
                 :email => 'gob@bluth.com'
               }
             )
-          }.to raise_error(Greenhouse::Error)
+          }.to raise_error(GreenhouseIo::Error)
         end
       end
     end
