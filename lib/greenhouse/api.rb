@@ -8,6 +8,7 @@ module Greenhouse
     def initialize(api_token = nil, default_options = {})
       @api_token = api_token || ENV['GREENHOUSE_API_TOKEN']
       @organization = default_options.delete(:organization)
+      warn "[DEPRECATION] This gem has been renamed to \"greenhouse_io\" and will no longer be supported. Please switch to \"greenhouse_io\" as soon as possible."
     end
 
     def offices(options = {})

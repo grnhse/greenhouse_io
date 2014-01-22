@@ -25,4 +25,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 2.14.1"
   spec.add_development_dependency "webmock", "~> 1.8.0"
   spec.add_development_dependency "vcr", "~> 2.5.0"
+
+  spec.post_install_message = %Q{
+  !    The greenhouse-io gem has been deprecated and has been replaced by greenhouse_io.
+  !    See: https://rubygems.org/gems/greenhouse_io
+  !    And: https://github.com/adrianbautista/greenhouse_io
+  }
 end
+
+
