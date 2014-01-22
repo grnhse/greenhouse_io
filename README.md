@@ -1,10 +1,10 @@
 # Greenhouse
 
 [![Gem
-Version](https://badge.fury.io/rb/greenhouse-io.png)](http://badge.fury.io/rb/greenhouse-io)
+Version](https://badge.fury.io/rb/greenhouse_io.png)](http://badge.fury.io/rb/greenhouse_io)
 [![Build
-Status](https://travis-ci.org/adrianbautista/greenhouse.png)](https://travis-ci.org/adrianbautista/greenhouse)
-[![Coverage Status](https://coveralls.io/repos/adrianbautista/greenhouse/badge.png)](https://coveralls.io/r/adrianbautista/greenhouse)
+Status](https://travis-ci.org/adrianbautista/greenhouse_io.png)](https://travis-ci.org/adrianbautista/greenhouse_io)
+[![Coverage Status](https://coveralls.io/repos/adrianbautista/greenhouse_io/badge.png)](https://coveralls.io/r/adrianbautista/greenhouse_io)
 
 A Ruby interface to
 [Greenhouse.io's](https://app.greenhouse.io/jobboard/jsonp_instructions)
@@ -14,7 +14,7 @@ API.
 
 Add this line to your application's Gemfile:
 
-    gem 'greenhouse-io'
+    gem 'greenhouse_io'
 
 And then execute:
 
@@ -22,7 +22,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install greenhouse-io
+    $ gem install greenhouse_io
 
 ## Usage
 
