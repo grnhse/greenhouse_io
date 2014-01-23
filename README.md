@@ -8,7 +8,7 @@ Status](https://travis-ci.org/adrianbautista/greenhouse_io.png)](https://travis-
 
 A Ruby interface to
 [Greenhouse.io's](https://app.greenhouse.io/jobboard/jsonp_instructions)
-API.
+API (requires Ruby 1.9.3 or greater).
 
 ## Installation
 
