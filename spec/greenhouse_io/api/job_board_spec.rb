@@ -6,7 +6,7 @@ describe GreenhouseIo::JobBoard do
     expect(GreenhouseIo::JobBoard.base_uri).to eq("https://api.greenhouse.io/v1")
   end
 
-  context "given a GreenhouseIo::JobBoard client" do
+  context "given an instance of GreenhouseIo::JobBoard" do
 
     before do
       @client = GreenhouseIo::JobBoard.new('123FakeToken', organization: 'generalassembly')
