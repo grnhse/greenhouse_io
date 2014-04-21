@@ -13,51 +13,51 @@ module GreenhouseIo
     end
 
     def offices(id = nil, options = {})
-      get_response_hash "/offices#{path_id(id)}", query: permitted_options(options)
+      get_response_hash "/offices#{path_id(id)}", permitted_options(options)
     end
 
     def departments(id = nil, options = {})
-      get_response_hash "/departments#{path_id(id)}", query: permitted_options(options)
+      get_response_hash "/departments#{path_id(id)}", permitted_options(options)
     end
 
     def candidates(id = nil, options = {})
-      get_response_hash "/candidates#{path_id(id)}", query: permitted_options(options)
+      get_response_hash "/candidates#{path_id(id)}", permitted_options(options)
     end
 
     def activity_feed(id, options = {})
-      get_response_hash "/candidates/#{id}/activity_feed", query: permitted_options(options)
+      get_response_hash "/candidates/#{id}/activity_feed", permitted_options(options)
     end
 
     def applications(id = nil, options = {})
-      get_response_hash "/applications#{path_id(id)}", query: permitted_options(options)
+      get_response_hash "/applications#{path_id(id)}", permitted_options(options)
     end
 
     def scorecards(id, options = {})
-      get_response_hash "/applications/#{id}/scorecards", query: permitted_options(options)
+      get_response_hash "/applications/#{id}/scorecards", permitted_options(options)
     end
 
     def scheduled_interviews(id, options = {})
-      get_response_hash "/applications/#{id}/scheduled_interviews", query: permitted_options(options)
+      get_response_hash "/applications/#{id}/scheduled_interviews", permitted_options(options)
     end
 
     def jobs(id = nil, options = {})
-      get_response_hash "/jobs#{path_id(id)}", query: permitted_options(options)
+      get_response_hash "/jobs#{path_id(id)}", permitted_options(options)
     end
 
     def stages(id, options = {})
-      get_response_hash "/jobs/#{id}/stages", query: permitted_options(options)
+      get_response_hash "/jobs/#{id}/stages", permitted_options(options)
     end
 
     def job_post(id, options = {})
-      get_response_hash "/jobs/#{id}/job_post", query: permitted_options(options)
+      get_response_hash "/jobs/#{id}/job_post", permitted_options(options)
     end
 
     def users(id = nil, options = {})
-      get_response_hash "/users#{path_id(id)}", query: permitted_options(options)
+      get_response_hash "/users#{path_id(id)}", permitted_options(options)
     end
 
     def sources(id = nil, options = {})
-      get_response_hash "/sources#{path_id(id)}", query: permitted_options(options)
+      get_response_hash "/sources#{path_id(id)}", permitted_options(options)
     end
 
     private
