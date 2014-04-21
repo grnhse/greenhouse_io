@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe GreenhouseIo::API do
+describe GreenhouseIo::JobBoard do
 
   it "should have a base url for an API endpoint" do
-    expect(GreenhouseIo::API.base_uri).to eq("https://api.greenhouse.io/v1")
+    expect(GreenhouseIo::JobBoard.base_uri).to eq("https://api.greenhouse.io/v1")
   end
 
-  context "given a GreenhouseIo::API client" do
+  context "given a GreenhouseIo::JobBoard client" do
 
     before do
-      @client = GreenhouseIo::API.new('123FakeToken', organization: 'generalassembly')
+      @client = GreenhouseIo::JobBoard.new('123FakeToken', organization: 'generalassembly')
     end
 
     describe "#initialize" do
@@ -23,14 +23,14 @@ describe GreenhouseIo::API do
 
       it "uses an enviroment variable when token is not specified" do
         ENV['GREENHOUSE_API_TOKEN'] = '123FakeENV'
-        default_client = GreenhouseIo::API.new
+        default_client = GreenhouseIo::JobBoard.new
         expect(default_client.api_token).to eq('123FakeENV')
       end
     end
 
     context "when an organization has not been set" do
       it "raises an 'organization can't be blank' error" do
-        no_org_client = GreenhouseIo::API.new
+        no_org_client = GreenhouseIo::JobBoard.new
         expect{ no_org_client.offices }.to raise_error(GreenhouseIo::Error)
       end
     end
@@ -38,7 +38,7 @@ describe GreenhouseIo::API do
     context "when an invalid organization is used" do
       it "raises an HTTP Error" do
         VCR.use_cassette('invalid_organization') do
-          invalid_org_client = GreenhouseIo::API.new(nil, organization: 'not-real-inc')
+          invalid_org_client = GreenhouseIo::JobBoard.new(nil, organization: 'not-real-inc')
           expect{ invalid_org_client.offices }.to raise_error(GreenhouseIo::Error)
         end
       end
