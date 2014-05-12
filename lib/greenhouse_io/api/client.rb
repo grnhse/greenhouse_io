@@ -9,7 +9,7 @@ module GreenhouseIo
     base_uri 'https://harvest.greenhouse.io/v1'
 
     def initialize(api_token = nil)
-      @api_token = api_token || ENV['GREENHOUSE_API_TOKEN']
+      @api_token = api_token || GreenhouseIo.configuration.api_token
     end
 
     def offices(id = nil, options = {})
@@ -74,7 +74,7 @@ module GreenhouseIo
       response = get_response(url, query: permitted_options(options), basic_auth: basic_auth)
       set_rate_limits(response.headers)
       if response.code == 200
-        MultiJson.load(response.body, :symbolize_keys => true)
+        parse_json(response)
       else
         raise GreenhouseIo::Error.new(response.code)
       end

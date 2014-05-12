@@ -9,6 +9,7 @@ describe GreenhouseIo::Client do
   context "given an instance of GreenhouseIo::Client" do
 
     before do
+      GreenhouseIo.configuration.symbolize_keys = true
       @client = GreenhouseIo::Client.new('123FakeToken')
     end
 
@@ -17,8 +18,8 @@ describe GreenhouseIo::Client do
         expect(@client.api_token).to eq('123FakeToken')
       end
 
-      it "uses an enviroment variable when token is not specified" do
-        ENV['GREENHOUSE_API_TOKEN'] = '123FakeENV'
+      it "uses the configuration value when token is not specified" do
+        GreenhouseIo.configuration.api_token = '123FakeENV'
         default_client = GreenhouseIo::Client.new
         expect(default_client.api_token).to eq('123FakeENV')
       end

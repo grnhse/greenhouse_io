@@ -9,6 +9,7 @@ describe GreenhouseIo::JobBoard do
   context "given an instance of GreenhouseIo::JobBoard" do
 
     before do
+      GreenhouseIo.configuration.symbolize_keys = true
       @client = GreenhouseIo::JobBoard.new('123FakeToken', organization: 'generalassembly')
     end
 
@@ -21,8 +22,8 @@ describe GreenhouseIo::JobBoard do
         expect(@client.organization).to eq('generalassembly')
       end
 
-      it "uses an enviroment variable when token is not specified" do
-        ENV['GREENHOUSE_API_TOKEN'] = '123FakeENV'
+      it "uses the configuration value when token is not specified" do
+        GreenhouseIo.configuration.api_token = '123FakeENV'
         default_client = GreenhouseIo::JobBoard.new
         expect(default_client.api_token).to eq('123FakeENV')
       end

@@ -6,8 +6,8 @@ module GreenhouseIo
     base_uri 'https://api.greenhouse.io/v1'
 
     def initialize(api_token = nil, default_options = {})
-      @api_token = api_token || ENV['GREENHOUSE_API_TOKEN']
-      @organization = default_options.delete(:organization)
+      @api_token = api_token || GreenhouseIo.configuration.api_token
+      @organization = default_options.delete(:organization) || GreenhouseIo.configuration.organization
     end
 
     def offices(options = {})
@@ -48,7 +48,7 @@ module GreenhouseIo
     def get_from_job_board_api(url, options = {})
       response = get_response(url, options)
       if response.code == 200
-        MultiJson.load(response.body, symbolize_keys: true)
+        parse_json(response)
       else
         raise GreenhouseIo::Error.new(response.code)
       end
@@ -57,7 +57,7 @@ module GreenhouseIo
     def post_to_job_board_api(url, options)
       response = post_response(url, options)
       if response.code == 200
-        response.include?("success") ? MultiJson.load(response.body, :symbolize_keys => true) : raise(GreenhouseIo::Error.new(response["reason"]))
+        response.include?("success") ? parse_json(response) : raise(GreenhouseIo::Error.new(response["reason"]))
       else
         raise GreenhouseIo::Error.new(response.code)
       end
