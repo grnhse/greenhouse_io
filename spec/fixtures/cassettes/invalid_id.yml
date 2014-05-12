@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.greenhouse.io/v1/boards/generalassembly/embed/job?id=123&questions=false
+    uri: https://api.greenhouse.io/v1/boards/generalassembly/embed/job?id=123&questions=
     body:
       encoding: US-ASCII
       string: ''

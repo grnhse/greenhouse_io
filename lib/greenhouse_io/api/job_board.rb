@@ -11,32 +11,31 @@ module GreenhouseIo
     end
 
     def offices(options = {})
-      get_response_hash("/boards/#{ query_organization(options) }/embed/offices")
+      get_from_job_board_api("/boards/#{ query_organization(options) }/embed/offices")
     end
 
     def office(id, options = {})
-      get_response_hash("/boards/#{ query_organization(options) }/embed/office?id=#{ id }")
+      get_from_job_board_api("/boards/#{ query_organization(options) }/embed/office", query: { id: id })
     end
 
     def departments(options = {})
-      get_response_hash("/boards/#{ query_organization(options) }/embed/departments")
+      get_from_job_board_api("/boards/#{ query_organization(options) }/embed/departments")
     end
 
     def department(id, options = {})
-      get_response_hash("/boards/#{ query_organization(options) }/embed/department?id=#{ id }")
+      get_from_job_board_api("/boards/#{ query_organization(options) }/embed/department", query: { id: id })
     end
 
     def jobs(options = {})
-      get_response_hash("/boards/#{ query_organization(options) }/embed/jobs?content=#{ options[:content] }")
+      get_from_job_board_api("/boards/#{ query_organization(options) }/embed/jobs", query: { content: options[:content] })
     end
 
-    def job(id, options = { :questions => false })
-      get_response_hash("/boards/#{ query_organization(options) }/embed/job?id=#{ id }&questions=#{ options[:questions] }")
+    def job(id, options = {})
+      get_from_job_board_api("/boards/#{ query_organization(options) }/embed/job", query: { id: id, questions: options[:questions] })
     end
 
     def apply_to_job(job_form_hash)
-      options = { :body => job_form_hash, :basic_auth => basic_auth }
-      post_response_hash('/applications', options)
+      post_to_job_board_api('/applications', { :body => job_form_hash, :basic_auth => basic_auth })
     end
 
     private
@@ -46,8 +45,17 @@ module GreenhouseIo
       org.nil? ? (raise GreenhouseIo::Error.new("organization can't be blank")) : org
     end
 
-    def post_response_hash(url, options)
-      response = self.class.post(url, options)
+    def get_from_job_board_api(url, options = {})
+      response = get_response(url, options)
+      if response.code == 200
+        MultiJson.load(response.body, symbolize_keys: true)
+      else
+        raise GreenhouseIo::Error.new(response.code)
+      end
+    end
+
+    def post_to_job_board_api(url, options)
+      response = post_response(url, options)
       if response.code == 200
         response.include?("success") ? MultiJson.load(response.body, :symbolize_keys => true) : raise(GreenhouseIo::Error.new(response["reason"]))
       else
