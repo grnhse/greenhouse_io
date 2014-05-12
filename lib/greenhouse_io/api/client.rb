@@ -5,7 +5,7 @@ module GreenhouseIo
 
     PERMITTED_OPTIONS = [:page, :per_page]
 
-    attr_accessor :api_token
+    attr_accessor :api_token, :rate_limit, :rate_limit_remaining
     base_uri 'https://harvest.greenhouse.io/v1'
 
     def initialize(api_token = nil)
@@ -13,51 +13,51 @@ module GreenhouseIo
     end
 
     def offices(id = nil, options = {})
-      get_response_hash "/offices#{path_id(id)}", permitted_options(options), basic_auth
+      get_from_harvest_api "/offices#{path_id(id)}", options
     end
 
     def departments(id = nil, options = {})
-      get_response_hash "/departments#{path_id(id)}", permitted_options(options), basic_auth
+      get_from_harvest_api "/departments#{path_id(id)}", options
     end
 
     def candidates(id = nil, options = {})
-      get_response_hash "/candidates#{path_id(id)}", permitted_options(options), basic_auth
+      get_from_harvest_api "/candidates#{path_id(id)}", options
     end
 
     def activity_feed(id, options = {})
-      get_response_hash "/candidates/#{id}/activity_feed", permitted_options(options), basic_auth
+      get_from_harvest_api "/candidates/#{id}/activity_feed", options
     end
 
     def applications(id = nil, options = {})
-      get_response_hash "/applications#{path_id(id)}", permitted_options(options), basic_auth
+      get_from_harvest_api "/applications#{path_id(id)}", options
     end
 
     def scorecards(id, options = {})
-      get_response_hash "/applications/#{id}/scorecards", permitted_options(options), basic_auth
+      get_from_harvest_api "/applications/#{id}/scorecards", options
     end
 
     def scheduled_interviews(id, options = {})
-      get_response_hash "/applications/#{id}/scheduled_interviews", permitted_options(options), basic_auth
+      get_from_harvest_api "/applications/#{id}/scheduled_interviews", options
     end
 
     def jobs(id = nil, options = {})
-      get_response_hash "/jobs#{path_id(id)}", permitted_options(options), basic_auth
+      get_from_harvest_api "/jobs#{path_id(id)}", options
     end
 
     def stages(id, options = {})
-      get_response_hash "/jobs/#{id}/stages", permitted_options(options), basic_auth
+      get_from_harvest_api "/jobs/#{id}/stages", options
     end
 
     def job_post(id, options = {})
-      get_response_hash "/jobs/#{id}/job_post", permitted_options(options), basic_auth
+      get_from_harvest_api "/jobs/#{id}/job_post", options
     end
 
     def users(id = nil, options = {})
-      get_response_hash "/users#{path_id(id)}", permitted_options(options), basic_auth
+      get_from_harvest_api "/users#{path_id(id)}", options
     end
 
     def sources(id = nil, options = {})
-      get_response_hash "/sources#{path_id(id)}", permitted_options(options), basic_auth
+      get_from_harvest_api "/sources#{path_id(id)}", options
     end
 
     private
@@ -68,6 +68,21 @@ module GreenhouseIo
 
     def permitted_options(options)
       options.select { |key, value| PERMITTED_OPTIONS.include? key }
+    end
+
+    def get_from_harvest_api(url, options = {})
+      response = get_response(url, query: permitted_options(options), basic_auth: basic_auth)
+      set_rate_limits(response.headers)
+      if response.code == 200
+        MultiJson.load(response.body, :symbolize_keys => true)
+      else
+        raise GreenhouseIo::Error.new(response.code)
+      end
+    end
+
+    def set_rate_limits(headers)
+      self.rate_limit = headers['x-ratelimit-limit'].to_i
+      self.rate_limit_remaining = headers['x-ratelimit-remaining'].to_i
     end
   end
 end
