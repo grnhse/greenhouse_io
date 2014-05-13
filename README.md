@@ -12,75 +12,84 @@ API (requires Ruby 1.9.3 or greater).
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add the gem to your application's Gemfile:
 
     gem 'greenhouse_io'
-
-And then execute:
-
-    $ bundle
 
 Or install it yourself as:
 
     $ gem install greenhouse_io
+    
+## Configuration
+
+You can assign default configuration values when using this gem, below is an example `config/initializers/greenhouse_io.rb` file in a Rails application:
+
+```ruby
+GreenhouseIo.configure do |config|
+	config.symbolize_keys = true # set response keys as strings or symbols, default is false
+	config.organization = 'General Assembly'
+	config.api_token = ENV['GREENHOUSE_API_TOKEN']
+end
+```
 
 ## Usage
 
-Creating an instance of the API client:
+Greenhouse's two APIs, [Harvest](https://app.greenhouse.io/configure/dev_center/harvest) and [JobBoard](https://app.greenhouse.io/configure/dev_center/api_documentation), can now be accessed through the gem. The `[GreenhouseIo::JobBoard](#greenhouseio-jobboard)` is nearly identical to the old `GreenhouseIo::API` class. `[GreenhouseIo::Client](#greenhouseio-client)` connects to the new Harvest API.
+
+### GreenhouseIo::JobBoard
+
+Creating an instance of the JobBoard client:
 ```ruby
-gh = GreenhouseIo::API.new("api_token")
+gh = GreenhouseIo::JobBoard.new("api_token", organization: "your_organization")
 ```
 
-The client will also use the environment variable `'GREENHOUSE_API_TOKEN'` by default:
+If you've configured the gem with a default `organization` and `api_token`, then you can just instantiate the class.
 ```ruby
-gh = GreenhouseIo::API.new
+gh = GreenhouseIo::JobBoard.new
 ```
 
-A default organization can be passed through an options hash:
-```ruby
-gh = GreenhouseIo::API.new("api_token", :organization => "your_organization")
-```
+`api_token` is only required for `#apply_to_job` and `organization` is also optional during initialization if an organization is passed in during method requests.
 
-### Fetching Office Data
+#### Fetching Office Data
 ```ruby
 gh.offices
-gh.offices(:organization => 'different_organization')
+gh.offices(organization: 'different_organization')
 # returns a hash containing all of the organization's department and jobs grouped by office
 ```
 
 ```ruby
-gh.office(officeID)
-gh.office(officeID, :organization => 'different_organization')
+gh.office(id)
+gh.office(id, organization: 'different_organization')
 # returns a hash containing the departments and jobs of a specific office
 ```
 
-### Fetching Department Data
+#### Fetching Department Data
 ```ruby
 gh.departments
-gh.departments(:organization => 'different_organizaton')
+gh.departments(organization: 'different_organizaton')
 ```
 
 ```ruby
-gh.department(departmentID)
-gh.department(departmentID, :organization => 'different_organization')
+gh.department(id)
+gh.department(id, organization: 'different_organization')
 ```
 
-### Fetching Job Data
+#### Fetching Job Data
 ```ruby
 gh.jobs
-gh.jobs(:content => 'true')
+gh.jobs(content: 'true')
 # includes the job description in the response
-gh.jobs(:organization => 'different_organization')
+gh.jobs(organization: 'different_organization')
 ```
 
 ```ruby
-gh.job(jobID)
-gh.job(jobID, :questions => true)
+gh.job(id)
+gh.job(id, questions: true)
 # returns the specified job and the array of questions on the application
-gh.job(jobID, :organization => 'different_organization')
+gh.job(id, organization: 'different_organization')
 ```
 
-### Submitting a Job Application
+#### Submitting a Job Application
 This is the only API method that **requires** an API token from Greenhouse
 ```ruby
 gh.apply_to_job(form_parameter_hash)
@@ -89,6 +98,55 @@ gh.apply_to_job(form_parameter_hash)
 # there should be a hidden input with name id in your form that
 # has the value of the job ID on Greenhouse.io
 ```
+
+### GreenhouseIo::Client
+
+Creating an instance of the API client:
+```ruby
+gh_client = GreenhouseIo::Client.new("api_token")
+```
+
+If you've configured the gem with a default `api_token`, then you can just instantiate the class.
+```ruby
+gh_client = GreenhouseIo::Client.new
+```
+
+#### Throttling
+
+Rate limit and rate limit remaining are availbe fter making an API request with an API client:
+
+```ruby
+gh_client.rate_limit # => 20
+gh_client.rate_limit_remaining  # => 20
+```
+
+#### Pagination
+
+All `GreenhouseIo::Client` API methods accept `:page` and `:per_page` options to get specific results of a paginated response from Greenhouse.
+
+```ruby
+gh_client.offices(id, page: 1, per_page: 2)
+```
+
+#### Available methods
+
+Methods in which an `id` is optional:
+
+* `offices`
+* `departments`
+* `candidates`
+* `applications`
+* `jobs`
+* `users`
+* `sources`
+
+Methods in which an `id` is **required**:
+
+* `activity_feed` *(requires a candidate ID)*
+* `scorecards` *(requires an application ID)*
+* `scheduled_interviews` *(requires an application ID)*
+* `stages` *(requires a job ID)*
+* `job_post` *(requires a job ID)*
 
 ## Contributing
 
