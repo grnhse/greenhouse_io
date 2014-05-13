@@ -22,7 +22,8 @@ Or install it yourself as:
     
 ## Configuration
 
-You can assign default configuration values when using this gem, below is an example `config/initializers/greenhouse_io.rb` file in a Rails application:
+You can assign default configuration values when using this gem.  
+Here is an example `config/initializers/greenhouse_io.rb` file used in a Rails application:
 
 ```ruby
 GreenhouseIo.configure do |config|
@@ -34,7 +35,7 @@ end
 
 ## Usage
 
-Greenhouse's two APIs, [Harvest](https://app.greenhouse.io/configure/dev_center/harvest) and [JobBoard](https://app.greenhouse.io/configure/dev_center/api_documentation), can now be accessed through the gem. The `[GreenhouseIo::JobBoard](#greenhouseio-jobboard)` is nearly identical to the old `GreenhouseIo::API` class. `[GreenhouseIo::Client](#greenhouseio-client)` connects to the new Harvest API.
+Greenhouse's two APIs, **[Harvest](https://app.greenhouse.io/configure/dev_center/harvest)** and **[JobBoard](https://app.greenhouse.io/configure/dev_center/api_documentation)**, can now be accessed through the gem. The [`GreenhouseIo::JobBoard`](#greenhouseiojobboard) is nearly identical to the old `GreenhouseIo::API` class. [`GreenhouseIo::Client`](#greenhouseioclient) connects to the new Harvest API.
 
 ### GreenhouseIo::JobBoard
 
