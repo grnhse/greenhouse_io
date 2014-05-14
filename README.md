@@ -114,7 +114,7 @@ gh_client = GreenhouseIo::Client.new
 
 #### Throttling
 
-Rate limit and rate limit remaining are availbe fter making an API request with an API client:
+Rate limit and rate limit remaining are available after making an API request with an API client:
 
 ```ruby
 gh_client.rate_limit # => 20
