@@ -2,9 +2,8 @@
 
 [![Gem
 Version](https://badge.fury.io/rb/greenhouse_io.png)](http://badge.fury.io/rb/greenhouse_io)
-[![Build
-Status](https://travis-ci.org/adrianbautista/greenhouse_io.png)](https://travis-ci.org/adrianbautista/greenhouse_io)
-[![Coverage Status](https://coveralls.io/repos/adrianbautista/greenhouse_io/badge.png)](https://coveralls.io/r/adrianbautista/greenhouse_io)
+[![Build Status](https://travis-ci.org/grnhse/greenhouse_io.svg?branch=master)](https://travis-ci.org/grnhse/greenhouse_io)
+[![Dependency Status](https://gemnasium.com/grnhse/greenhouse_io.svg)](https://gemnasium.com/grnhse/greenhouse_io)
 
 A Ruby interface to
 [Greenhouse.io's](https://app.greenhouse.io/jobboard/jsonp_instructions)
