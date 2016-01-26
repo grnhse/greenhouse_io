@@ -9,7 +9,7 @@ describe GreenhouseIo::Configuration do
     end
 
     it "returns the default value" do
-      expect(GreenhouseIo.configuration.symbolize_keys).to be_false
+      expect(GreenhouseIo.configuration.symbolize_keys).to be false
     end
   end
 
@@ -21,7 +21,7 @@ describe GreenhouseIo::Configuration do
     end
 
     it "returns the specified value" do
-      expect(GreenhouseIo.configuration.symbolize_keys).to be_true
+      expect(GreenhouseIo.configuration.symbolize_keys).to be true
     end
   end
 
