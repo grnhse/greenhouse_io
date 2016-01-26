@@ -16,6 +16,10 @@ module GreenhouseIo
       get_from_harvest_api "/offices#{path_id(id)}", options
     end
 
+    def offers(id = nil, options = {})
+      get_from_harvest_api "/offers#{path_id(id)}", options
+    end
+
     def departments(id = nil, options = {})
       get_from_harvest_api "/departments#{path_id(id)}", options
     end
