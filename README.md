@@ -3,6 +3,7 @@
 [![Gem
 Version](https://badge.fury.io/rb/greenhouse_io.png)](http://badge.fury.io/rb/greenhouse_io)
 [![Build Status](https://travis-ci.org/grnhse/greenhouse_io.svg?branch=master)](https://travis-ci.org/grnhse/greenhouse_io)
+[![Test Coverage](https://codeclimate.com/github/grnhse/greenhouse_io/badges/coverage.svg)](https://codeclimate.com/github/grnhse/greenhouse_io/coverage)
 [![Dependency Status](https://gemnasium.com/grnhse/greenhouse_io.svg)](https://gemnasium.com/grnhse/greenhouse_io)
 
 A Ruby interface to
