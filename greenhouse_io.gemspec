@@ -18,12 +18,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency('httmultiparty')
-  spec.add_dependency('multi_json', '>= 1.9.2', '<= 1.10.1')
+  spec.add_dependency('multi_json', '~>1.11.2')
   spec.required_ruby_version = '>= 1.9.3'
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec", "~> 2.14.1"
-  spec.add_development_dependency "webmock", "~> 1.8.0"
-  spec.add_development_dependency "vcr", "~> 2.5.0"
+  spec.add_development_dependency "rspec", "~> 3.4.0"
+  spec.add_development_dependency "webmock", "~> 1.22.6"
+  spec.add_development_dependency "vcr", "~> 3.0.1"
 end
