@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe GreenhouseIo::Client do
 
+  FAKE_API_TOKEN = '123FakeToken'
+
   it "should have a base url for an API endpoint" do
     expect(GreenhouseIo::Client.base_uri).to eq("https://harvest.greenhouse.io/v1")
   end
@@ -10,12 +12,12 @@ describe GreenhouseIo::Client do
 
     before do
       GreenhouseIo.configuration.symbolize_keys = true
-      @client = GreenhouseIo::Client.new('123FakeToken')
+      @client = GreenhouseIo::Client.new(FAKE_API_TOKEN)
     end
 
     describe "#initialize" do
       it "has an api_token" do
-        expect(@client.api_token).to eq('123FakeToken')
+        expect(@client.api_token).to eq(FAKE_API_TOKEN)
       end
 
       it "uses the configuration value when token is not specified" do
