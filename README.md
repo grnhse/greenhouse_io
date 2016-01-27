@@ -26,7 +26,7 @@ You can assign default configuration values when using this gem.
 Here is an example `config/initializers/greenhouse_io.rb` file used in a Rails application:
 
 ```ruby
-GreenhouseIo.configure do |config|
+Greenhouse.configure do |config|
 	config.symbolize_keys = true # set response keys as strings or symbols, default is false
 	config.organization = 'General Assembly'
 	config.api_token = ENV['GREENHOUSE_API_TOKEN']
@@ -35,18 +35,18 @@ end
 
 ## Usage
 
-Greenhouse's two APIs, **[Harvest](https://app.greenhouse.io/configure/dev_center/harvest)** and **[JobBoard](https://app.greenhouse.io/configure/dev_center/api_documentation)**, can now be accessed through the gem. The [`GreenhouseIo::JobBoard`](#greenhouseiojobboard) is nearly identical to the old `GreenhouseIo::API` class. [`GreenhouseIo::Client`](#greenhouseioclient) connects to the new Harvest API.
+Greenhouse's two APIs, **[Harvest](https://app.greenhouse.io/configure/dev_center/harvest)** and **[JobBoard](https://app.greenhouse.io/configure/dev_center/api_documentation)**, can now be accessed through the gem. The [`Greenhouse::JobBoard`](#Greenhousejobboard) is nearly identical to the old `Greenhouse::API` class. [`Greenhouse::Client`](#Greenhouseclient) connects to the new Harvest API.
 
-### GreenhouseIo::JobBoard
+### Greenhouse::JobBoard
 
 Creating an instance of the JobBoard client:
 ```ruby
-gh = GreenhouseIo::JobBoard.new("api_token", organization: "your_organization")
+gh = Greenhouse::JobBoard.new("api_token", organization: "your_organization")
 ```
 
 If you've configured the gem with a default `organization` and `api_token`, then you can just instantiate the class.
 ```ruby
-gh = GreenhouseIo::JobBoard.new
+gh = Greenhouse::JobBoard.new
 ```
 
 `api_token` is only required for `#apply_to_job` and `organization` is also optional during initialization if an organization is passed in during method requests.
@@ -100,16 +100,16 @@ gh.apply_to_job(form_parameter_hash)
 # has the value of the job ID on Greenhouse.io
 ```
 
-### GreenhouseIo::Client
+### Greenhouse::Client
 
 Creating an instance of the API client:
 ```ruby
-gh_client = GreenhouseIo::Client.new("api_token")
+gh_client = Greenhouse::Client.new("api_token")
 ```
 
 If you've configured the gem with a default `api_token`, then you can just instantiate the class.
 ```ruby
-gh_client = GreenhouseIo::Client.new
+gh_client = Greenhouse::Client.new
 ```
 
 #### Throttling
@@ -123,7 +123,7 @@ gh_client.rate_limit_remaining  # => 20
 
 #### Pagination
 
-All `GreenhouseIo::Client` API methods accept `:page` and `:per_page` options to get specific results of a paginated response from Greenhouse.
+All `Greenhouse::Client` API methods accept `:page` and `:per_page` options to get specific results of a paginated response from Greenhouse.
 
 ```ruby
 gh_client.offices(id, page: 1, per_page: 2)

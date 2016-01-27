@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe GreenhouseIo::JobBoard do
+describe Greenhouse::JobBoard do
 
   it "should have a base url for an API endpoint" do
-    expect(GreenhouseIo::JobBoard.base_uri).to eq("https://api.greenhouse.io/v1")
+    expect(Greenhouse::JobBoard.base_uri).to eq("https://api.greenhouse.io/v1")
   end
 
-  context "given an instance of GreenhouseIo::JobBoard" do
+  context "given an instance of Greenhouse::JobBoard" do
 
     before do
-      GreenhouseIo.configuration.symbolize_keys = true
-      @client = GreenhouseIo::JobBoard.new('123FakeToken', organization: 'generalassembly')
+      Greenhouse.configuration.symbolize_keys = true
+      @client = Greenhouse::JobBoard.new('123FakeToken', organization: 'generalassembly')
     end
 
     describe "#initialize" do
@@ -23,24 +23,24 @@ describe GreenhouseIo::JobBoard do
       end
 
       it "uses the configuration value when token is not specified" do
-        GreenhouseIo.configuration.api_token = '123FakeENV'
-        default_client = GreenhouseIo::JobBoard.new
+        Greenhouse.configuration.api_token = '123FakeENV'
+        default_client = Greenhouse::JobBoard.new
         expect(default_client.api_token).to eq('123FakeENV')
       end
     end
 
     context "when an organization has not been set" do
       it "raises an 'organization can't be blank' error" do
-        no_org_client = GreenhouseIo::JobBoard.new
-        expect{ no_org_client.offices }.to raise_error(GreenhouseIo::Error)
+        no_org_client = Greenhouse::JobBoard.new
+        expect{ no_org_client.offices }.to raise_error(Greenhouse::Error)
       end
     end
 
     context "when an invalid organization is used" do
       it "raises an HTTP Error" do
         VCR.use_cassette('invalid_organization') do
-          invalid_org_client = GreenhouseIo::JobBoard.new(nil, organization: 'not-real-inc')
-          expect{ invalid_org_client.offices }.to raise_error(GreenhouseIo::Error)
+          invalid_org_client = Greenhouse::JobBoard.new(nil, organization: 'not-real-inc')
+          expect{ invalid_org_client.offices }.to raise_error(Greenhouse::Error)
         end
       end
     end
@@ -48,7 +48,7 @@ describe GreenhouseIo::JobBoard do
     context "when an invalid id is used" do
       it "raises an HTTP Error" do
         VCR.use_cassette('invalid_id') do
-          expect{ @client.job(123) }.to raise_error(GreenhouseIo::Error)
+          expect{ @client.job(123) }.to raise_error(Greenhouse::Error)
         end
       end
     end
@@ -162,7 +162,7 @@ describe GreenhouseIo::JobBoard do
                 :question_2720 => 'not_required'
               }
             )
-          }.to raise_error(GreenhouseIo::Error)
+          }.to raise_error(Greenhouse::Error)
         end
       end
 
@@ -177,7 +177,7 @@ describe GreenhouseIo::JobBoard do
                 :email => 'gob@bluth.com'
               }
             )
-          }.to raise_error(GreenhouseIo::Error)
+          }.to raise_error(Greenhouse::Error)
         end
       end
     end

@@ -1,4 +1,4 @@
-module GreenhouseIo
+module Greenhouse
   class Error < StandardError
     attr_reader :code
 

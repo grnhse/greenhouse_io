@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GreenhouseIo::Configuration do
+describe Greenhouse::Configuration do
   after { restore_default_config }
 
   context "when no symbolize_keys is specified" do
@@ -9,19 +9,19 @@ describe GreenhouseIo::Configuration do
     end
 
     it "returns the default value" do
-      expect(GreenhouseIo.configuration.symbolize_keys).to be false
+      expect(Greenhouse.configuration.symbolize_keys).to be false
     end
   end
 
   context "when given a symbolize_keys value" do
     before do
-      GreenhouseIo.configure do |config|
+      Greenhouse.configure do |config|
         config.symbolize_keys = true
       end
     end
 
     it "returns the specified value" do
-      expect(GreenhouseIo.configuration.symbolize_keys).to be true
+      expect(Greenhouse.configuration.symbolize_keys).to be true
     end
   end
 
@@ -31,19 +31,19 @@ describe GreenhouseIo::Configuration do
     end
 
     it "returns nil" do
-      expect(GreenhouseIo.configuration.organization).to be_nil
+      expect(Greenhouse.configuration.organization).to be_nil
     end
   end
 
   context "when given an organization" do
     before do
-      GreenhouseIo.configure do |config|
+      Greenhouse.configure do |config|
         config.organization = "General Assembly"
       end
     end
 
     it "returns the specified value" do
-      expect(GreenhouseIo.configuration.organization).to eq("General Assembly")
+      expect(Greenhouse.configuration.organization).to eq("General Assembly")
     end
   end
 
@@ -53,19 +53,19 @@ describe GreenhouseIo::Configuration do
     end
 
     it "returns nil" do
-      expect(GreenhouseIo.configuration.api_token).to be_nil
+      expect(Greenhouse.configuration.api_token).to be_nil
     end
   end
 
   context "when given an api token" do
     before do
-      GreenhouseIo.configure do |config|
+      Greenhouse.configure do |config|
         config.api_token = '123FakeToken'
       end
     end
 
     it "returns the specified value" do
-      expect(GreenhouseIo.configuration.api_token).to eq('123FakeToken')
+      expect(Greenhouse.configuration.api_token).to eq('123FakeToken')
     end
   end
 end

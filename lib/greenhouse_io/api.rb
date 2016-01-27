@@ -1,4 +1,4 @@
-module GreenhouseIo
+module Greenhouse
   module API
     def get_response(url, options)
       self.class.get(url, options)
@@ -9,7 +9,7 @@ module GreenhouseIo
     end
 
     def parse_json(response)
-      MultiJson.load(response.body, symbolize_keys: GreenhouseIo.configuration.symbolize_keys)
+      MultiJson.load(response.body, symbolize_keys: Greenhouse.configuration.symbolize_keys)
     end
 
     def basic_auth

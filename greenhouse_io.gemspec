@@ -5,7 +5,7 @@ require 'greenhouse_io/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "greenhouse_io"
-  spec.version       = GreenhouseIo::VERSION
+  spec.version       = Greenhouse::VERSION
   spec.authors       = ["Adrian Bautista"]
   spec.email         = ["adrianbautista8@gmail.com"]
   spec.description   = %q{A Ruby based wrapper for Greenhouse.io API}

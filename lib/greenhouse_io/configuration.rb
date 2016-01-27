@@ -1,4 +1,4 @@
-module GreenhouseIo
+module Greenhouse
   class Configuration
     attr_accessor :symbolize_keys, :organization, :api_token
 

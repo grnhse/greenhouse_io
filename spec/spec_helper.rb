@@ -17,6 +17,6 @@ VCR.configure do |config|
 end
 
 def restore_default_config
-  GreenhouseIo.configuration = nil
-  GreenhouseIo.configure {}
+  Greenhouse.configuration = nil
+  Greenhouse.configure {}
 end

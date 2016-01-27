@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe GreenhouseIo::Client do
+describe Greenhouse::Harvest do
 
   FAKE_API_TOKEN = '123FakeToken'
 
   it "should have a base url for an API endpoint" do
-    expect(GreenhouseIo::Client.base_uri).to eq("https://harvest.greenhouse.io/v1")
+    expect(Greenhouse::Harvest.base_uri).to eq("https://harvest.greenhouse.io/v1")
   end
 
-  context "given an instance of GreenhouseIo::Client" do
+  context "given an instance of Greenhouse::Harvest" do
 
     before do
-      GreenhouseIo.configuration.symbolize_keys = true
-      @client = GreenhouseIo::Client.new(FAKE_API_TOKEN)
+      Greenhouse.configuration.symbolize_keys = true
+      @client = Greenhouse::Harvest.new(FAKE_API_TOKEN)
     end
 
     describe "#initialize" do
@@ -21,8 +21,8 @@ describe GreenhouseIo::Client do
       end
 
       it "uses the configuration value when token is not specified" do
-        GreenhouseIo.configuration.api_token = '123FakeENV'
-        default_client = GreenhouseIo::Client.new
+        Greenhouse.configuration.api_token = '123FakeENV'
+        default_client = Greenhouse::Harvest.new
         expect(default_client.api_token).to eq('123FakeENV')
       end
     end
@@ -63,11 +63,11 @@ describe GreenhouseIo::Client do
     end
 
     describe "#permitted_options" do
-      let(:options) { GreenhouseIo::Client::PERMITTED_OPTIONS + [:where] }
+      let(:options) { Greenhouse::Harvest::PERMITTED_OPTIONS + [:where] }
 
       it "allows permitted options" do
         output = @client.send(:permitted_options, options)
-        GreenhouseIo::Client::PERMITTED_OPTIONS.each do |option|
+        Greenhouse::Harvest::PERMITTED_OPTIONS.each do |option|
           expect(output).to include(option)
         end
       end

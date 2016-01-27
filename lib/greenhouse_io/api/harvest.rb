@@ -1,7 +1,7 @@
-module GreenhouseIo
-  class Client
+module Greenhouse
+  class Harvest
     include HTTMultiParty
-    include GreenhouseIo::API
+    include Greenhouse::API
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id]
 
@@ -9,7 +9,7 @@ module GreenhouseIo
     base_uri 'https://harvest.greenhouse.io/v1'
 
     def initialize(api_token = nil)
-      @api_token = api_token || GreenhouseIo.configuration.api_token
+      @api_token = api_token || Greenhouse.configuration.api_token
     end
 
     def offices(id = nil, options = {})
@@ -80,7 +80,7 @@ module GreenhouseIo
       if response.code == 200
         parse_json(response)
       else
-        raise GreenhouseIo::Error.new(response.code)
+        raise Greenhouse::Error.new(response.code)
       end
     end
 
