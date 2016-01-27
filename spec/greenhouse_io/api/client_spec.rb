@@ -470,5 +470,27 @@ describe GreenhouseIo::Client do
         end
       end
     end
+
+    describe "#offers" do
+      context "given no id" do
+        before do
+          VCR.use_cassette('client/offers') do
+            @offers = @client.offers
+          end
+        end
+
+        it "returns a response" do
+          expect(@offers).to_not be nil
+        end
+
+        it "returns an array of offers" do
+          expect(@offers).to be_an_instance_of(Array)
+          expect(@offers.first[:id]).to be_a(Integer).and be > 0
+          expect(@offers.first[:created_at]).to be_a(String)
+          expect(@offers.first[:version]).to be_a(Integer).and be > 0
+          expect(@offers.first[:status]).to be_a(String)
+        end
+      end
+    end
   end
 end
