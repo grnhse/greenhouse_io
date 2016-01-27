@@ -491,6 +491,26 @@ describe GreenhouseIo::Client do
           expect(@offers.first[:status]).to be_a(String)
         end
       end
+
+      context "given an id" do
+        before do
+          VCR.use_cassette('client/offer') do
+            @offer = @client.offers(221598)
+          end
+        end
+
+        it "returns a response" do
+          expect(@offer).to_not be nil
+        end
+
+        it "returns an offer object" do
+          expect(@offer).to be_an_instance_of(Hash)
+          expect(@offer[:id]).to be_a(Integer).and be > 0
+          expect(@offer[:created_at]).to be_a(String)
+          expect(@offer[:version]).to be_a(Integer).and be > 0
+          expect(@offer[:status]).to be_a(String)
+        end
+      end
     end
   end
 end
