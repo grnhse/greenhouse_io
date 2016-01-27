@@ -263,6 +263,24 @@ describe GreenhouseIo::Client do
           expect(@application).to have_key(:person_id)
         end
       end
+
+      context "given a job_id" do
+        before do
+          VCR.use_cassette('client/application_by_job_id') do
+            @applications = @client.applications(nil, :job_id => 144371)
+          end
+        end
+
+        it "returns a response" do
+          expect(@applications).to_not be_nil
+        end
+
+        it "returns an array of applications" do
+          expect(@applications).to be_an_instance_of(Array)
+          expect(@applications.first).to be_an_instance_of(Hash)
+          expect(@applications.first).to have_key(:prospect)
+        end
+      end
     end
 
     describe "#scorecards" do
