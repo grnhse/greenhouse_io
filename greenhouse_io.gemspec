@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Ruby bindings for the greenhouse.io Harvest API and Job Board API}
   spec.summary       = %q{Ruby bindings for the greenhouse.io Harvest API and Job Board API}
   spec.license       = "MIT"
+  spec.homepage      = "https://github.com/grnhse/greenhouse_io"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
