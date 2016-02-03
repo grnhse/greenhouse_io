@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency('httmultiparty')
+  spec.add_dependency('httmultiparty', '~> 0.3.16')
   spec.add_dependency('multi_json', '~>1.11.2')
   spec.required_ruby_version = '>= 1.9.3'
 

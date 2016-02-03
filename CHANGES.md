@@ -11,3 +11,4 @@ Released 2016-02-03.
 
 ##### Changed
 - Upgraded dependencies: `multi_json` (now ~>1.11.2), and development gems
+- Added version dependency for `httmultiparty`: ``'~> 0.3.16'``
