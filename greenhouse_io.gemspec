@@ -6,10 +6,10 @@ require 'greenhouse_io/version'
 Gem::Specification.new do |spec|
   spec.name          = "greenhouse_io"
   spec.version       = GreenhouseIo::VERSION
-  spec.authors       = ["Adrian Bautista"]
-  spec.email         = ["adrianbautista8@gmail.com"]
-  spec.description   = %q{A Ruby based wrapper for Greenhouse.io API}
-  spec.summary       = %q{A Ruby based wrapper for Greenhouse.io API}
+  spec.authors       = ["Greenhouse Software", "Adrian Bautista"]
+  spec.email         = ["support@greenhouse.io", "adrianbautista8@gmail.com"]
+  spec.description   = %q{Ruby bindings for the greenhouse.io Harvest API and Job Board API}
+  spec.summary       = %q{Ruby bindings for the greenhouse.io Harvest API and Job Board API}
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
