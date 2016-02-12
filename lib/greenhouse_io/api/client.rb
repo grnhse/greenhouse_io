@@ -40,6 +40,10 @@ module GreenhouseIo
       get_from_harvest_api "/applications/#{id}/scorecards", options
     end
 
+    def all_scorecards(id = nil, options = {})
+      get_from_harvest_api "/scorecards/#{id}", options
+    end
+
     def scheduled_interviews(id, options = {})
       get_from_harvest_api "/applications/#{id}/scheduled_interviews", options
     end
