@@ -18,7 +18,11 @@ Add the gem to your application's Gemfile:
 
 Or install it yourself as:
 
-    $ gem install greenhouse_io
+    $ gem install
+
+## API Documentation
+
+Documentation for the Harvest and Job Board web APIs can be found at [developers.greenhouse.io](https://developers.greenhouse.io).
     
 ## Configuration
 
