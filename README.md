@@ -140,6 +140,7 @@ Methods in which an `id` is optional:
 * `jobs`
 * `users`
 * `sources`
+* `all_scorecards`
 * `offers`
 
 Methods in which an `id` is **required**:
