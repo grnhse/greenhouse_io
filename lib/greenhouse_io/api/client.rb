@@ -32,6 +32,10 @@ module GreenhouseIo
       get_from_harvest_api "/candidates/#{id}/activity_feed", options
     end
 
+    def create_note(id, note_hash, on_behalf_of)
+      post_to_harvest_api("/candidates/#{id}/activity_feed/notes", note_hash, on_behalf_of)
+    end
+
     def applications(id = nil, options = {})
       get_from_harvest_api "/applications#{path_id(id)}", options
     end
@@ -80,6 +84,17 @@ module GreenhouseIo
 
     def get_from_harvest_api(url, options = {})
       response = get_response(url, query: permitted_options(options), basic_auth: basic_auth)
+      set_rate_limits(response.headers)
+      if response.code == 200
+        parse_json(response)
+      else
+        raise GreenhouseIo::Error.new(response.code)
+      end
+    end
+
+    def post_to_harvest_api(url, body, on_behalf_of)
+      options = { :body => body.to_json, :basic_auth => basic_auth, :headers => {"On-Behalf-Of" => on_behalf_of.to_s} }
+      response = post_response(url, options)
       set_rate_limits(response.headers)
       if response.code == 200
         parse_json(response)
