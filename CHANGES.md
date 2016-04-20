@@ -3,7 +3,7 @@
 This project follows [semantic versioning](http://semver.org/).  This changelog follows suggestions from [keepachangelog.com](http://keepachangelog.com/).
 
 ## Version 2.4.0
-Released 2016-04-20.
+Released 2016-04-20.  Contributed by [@mariochavez](https://github.com/mariochavez) -- thank you!
 
 #### Added
 - Exposed `link` HTTP header in `GreenhouseIo::Client`.
