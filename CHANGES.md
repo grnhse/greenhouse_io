@@ -2,8 +2,17 @@
 
 This project follows [semantic versioning](http://semver.org/).  This changelog follows suggestions from [keepachangelog.com](http://keepachangelog.com/).
 
-## Version 2.3.1
+## Version 2.4.0
 Released 2016-04-20.
+
+#### Added
+- Exposed `link` HTTP header in `GreenhouseIo::Client`.
+
+#### Removed
+- Removed dependency on `multi_json` in favor of Ruby's `json` module.
+
+## Version 2.3.1
+Released 2016-04-20.  In retrospect, this should've been a minor version bump instead of a minor version since this added functionality, not a bug fix.
 
 #### Added
 - Added method `create_candidate_note`.  Thanks for contributing, [@jleven](https://github.com/jleven)!
