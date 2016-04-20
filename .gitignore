@@ -14,3 +14,6 @@ rdoc
 spec/reports
 tmp
 .ruby-*
+*.swp
+*.un~
+tags

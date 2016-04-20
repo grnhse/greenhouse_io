@@ -1,5 +1,4 @@
 require 'httmultiparty'
-require 'multi_json'
 require 'json'
 
 require "greenhouse_io/version"
