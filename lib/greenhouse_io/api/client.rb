@@ -32,9 +32,9 @@ module GreenhouseIo
       get_from_harvest_api "/candidates/#{id}/activity_feed", options
     end
 
-    def create_note(id, note_hash, on_behalf_of)
+    def create_candidate_note(candidate_id, note_hash, on_behalf_of)
       post_to_harvest_api(
-        "/candidates/#{id}/activity_feed/notes",
+        "/candidates/#{candidate_id}/activity_feed/notes",
         note_hash,
         { 'On-Behalf-Of' => on_behalf_of.to_s }
       )

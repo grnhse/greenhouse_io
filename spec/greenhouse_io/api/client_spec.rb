@@ -225,10 +225,10 @@ describe GreenhouseIo::Client do
       end
     end
 
-    describe "#create_note" do
+    describe "#create_candidate_note" do
       it "posts an note for a specified candidate" do
-        VCR.use_cassette('client/create_note') do
-          create_note = @client.create_note(
+        VCR.use_cassette('client/create_candidate_note') do
+          create_candidate_note = @client.create_candidate_note(
             1,
             {
                 user_id: 2,
@@ -237,15 +237,15 @@ describe GreenhouseIo::Client do
             },
             2
           )
-          expect(create_note).to_not be_nil
-          expect(create_note).to include :body => 'Candidate on vacation'
+          expect(create_candidate_note).to_not be_nil
+          expect(create_candidate_note).to include :body => 'Candidate on vacation'
         end
       end
 
       it "errors when given invalid On-Behalf-Of id" do
-        VCR.use_cassette('client/create_note_invalid_on_behalf_of') do
+        VCR.use_cassette('client/create_candidate_note_invalid_on_behalf_of') do
           expect {
-            @client.create_note(
+            @client.create_candidate_note(
               1,
               {
                   user_id: 2,
@@ -259,9 +259,9 @@ describe GreenhouseIo::Client do
       end
 
       it "errors when given an invalid candidate id" do
-        VCR.use_cassette('client/create_note_invalid_candidate_id') do
+        VCR.use_cassette('client/create_candidate_note_invalid_candidate_id') do
           expect {
-            @client.create_note(
+            @client.create_candidate_note(
               99,
               {
                   user_id: 2,
@@ -275,9 +275,9 @@ describe GreenhouseIo::Client do
       end
 
       it "errors when given an invalid user_id" do
-        VCR.use_cassette('client/create_note_invalid_user_id') do
+        VCR.use_cassette('client/create_candidate_note_invalid_user_id') do
           expect {
-            @client.create_note(
+            @client.create_candidate_note(
               1,
               {
                   user_id: 99,
@@ -291,9 +291,9 @@ describe GreenhouseIo::Client do
       end
 
       it "errors when missing required field" do
-        VCR.use_cassette('client/create_note_invalid_missing_field') do
+        VCR.use_cassette('client/create_candidate_note_invalid_missing_field') do
           expect {
-            @client.create_note(
+            @client.create_candidate_note(
               1,
               {
                   user_id: 2,
