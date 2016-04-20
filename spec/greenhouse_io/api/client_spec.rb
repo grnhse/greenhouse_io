@@ -45,26 +45,21 @@ describe GreenhouseIo::Client do
 
     describe "#set_headers_info" do
       before do
-        @headers = {
-          'x-ratelimit-limit' => '20',
-          'x-ratelimit-remaining' => '20',
-          'link' => '<https://harvest.greenhouse.io/v1/candidates?page=2&per_page=100>; rel="next",<https://harvest.greenhouse.io/v1/candidates?page=142&per_page=100>; rel="last"'
-        }
+        VCR.use_cassette('client/headers') do
+          @client.candidates
+        end
       end
 
       it "sets the rate limit" do
-        @client.send(:set_headers_info, @headers)
         expect(@client.rate_limit).to eq(20)
       end
 
       it "sets the remaining rate limit" do
-        @client.send(:set_headers_info, @headers)
-        expect(@client.rate_limit_remaining).to eq(20)
+        expect(@client.rate_limit_remaining).to eq(19)
       end
 
       it "sets rest link" do
-        @client.send(:set_headers_info, @headers)
-        expect(@client.link).to match(/rel="last"/)
+        expect(@client.link).to eq('<https://harvest.greenhouse.io/v1/candidates/?page=1&per_page=100>; rel="last"')
       end
     end
 
