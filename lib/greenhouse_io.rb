@@ -1,6 +1,6 @@
 require 'httmultiparty'
 require 'multi_json'
-require 'cgi'
+require 'json'
 
 require "greenhouse_io/version"
 require "greenhouse_io/error"
