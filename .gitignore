@@ -16,4 +16,4 @@ tmp
 .ruby-*
 *.swp
 *.un~
-tags
+.tags
