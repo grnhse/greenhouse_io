@@ -116,6 +116,27 @@ If you've configured the gem with a default `api_token`, then you can just insta
 gh_client = GreenhouseIo::Client.new
 ```
 
+#### Listing candidates
+
+```
+gh_client.candidates
+```
+
+#### Creating a candidate note
+Use this method to attach a new note to a candidate.
+
+```
+candidate_id = 4567
+author_id = 123 # ID of the user who wrote this note
+note = {
+  :user_id => 123,
+  :message => "This candidate has very strong opinions about Node.JS.",
+  :visibility => "public"
+}
+
+gh_client.create_candidate_note(candidate_id, note, author_id)
+```
+
 #### Throttling
 
 Rate limit and rate limit remaining are available after making an API request with an API client:
@@ -135,7 +156,7 @@ gh_client.offices(id, page: 1, per_page: 2)
 
 #### Available methods
 
-Methods in which an `id` is optional:
+Methods for which an `id` is optional:
 
 * `offices`
 * `departments`
@@ -147,13 +168,14 @@ Methods in which an `id` is optional:
 * `all_scorecards`
 * `offers`
 
-Methods in which an `id` is **required**:
+Methods for which an `id` is **required**:
 
 * `activity_feed` *(requires a candidate ID)*
 * `scorecards` *(requires an application ID)*
 * `scheduled_interviews` *(requires an application ID)*
 * `stages` *(requires a job ID)*
 * `job_post` *(requires a job ID)*
+* `create_candidate_note` *(requires a candidate ID)*
 
 ## Contributing
 
@@ -162,3 +184,5 @@ Methods in which an `id` is **required**:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+Contributions are always welcome!
