@@ -118,14 +118,14 @@ gh_client = GreenhouseIo::Client.new
 
 #### Listing candidates
 
-```
+```ruby
 gh_client.candidates
 ```
 
 #### Creating a candidate note
 Use this method to attach a new note to a candidate.
 
-```
+```ruby
 candidate_id = 4567
 author_id = 123 # ID of the user who wrote this note
 note = {
@@ -153,6 +153,16 @@ All `GreenhouseIo::Client` API methods accept `:page` and `:per_page` options to
 ```ruby
 gh_client.offices(id, page: 1, per_page: 2)
 ```
+
+You can determine the last page and next page by looking at the `link` header from the last response:
+
+```ruby
+gh_client.link
+
+# => '<https://harvest.greenhouse.io/v1/candidates?page=2&per_page=100>; rel="next",<https://harvest.greenhouse.io/v1/candidates?page=142&per_page=100>; rel="last"'
+```
+
+You'll need to manually parse the `next` and `last` links to tell what the next or final page number will be.
 
 #### Available methods
 

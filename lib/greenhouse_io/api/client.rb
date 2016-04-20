@@ -5,7 +5,7 @@ module GreenhouseIo
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id]
 
-    attr_accessor :api_token, :rate_limit, :rate_limit_remaining
+    attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
     base_uri 'https://harvest.greenhouse.io/v1'
 
     def initialize(api_token = nil)
@@ -92,7 +92,7 @@ module GreenhouseIo
         :basic_auth => basic_auth
       })
 
-      set_rate_limits(response.headers)
+      set_headers_info(response.headers)
 
       if response.code == 200
         parse_json(response)
@@ -108,7 +108,7 @@ module GreenhouseIo
         :headers => headers
       })
 
-      set_rate_limits(response.headers)
+      set_headers_info(response.headers)
 
       if response.code == 200
         parse_json(response)
@@ -117,9 +117,10 @@ module GreenhouseIo
       end
     end
 
-    def set_rate_limits(headers)
+    def set_headers_info(headers)
       self.rate_limit = headers['x-ratelimit-limit'].to_i
       self.rate_limit_remaining = headers['x-ratelimit-remaining'].to_i
+      self.link = headers['link'].to_s
     end
   end
 end

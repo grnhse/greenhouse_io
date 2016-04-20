@@ -9,7 +9,7 @@ module GreenhouseIo
     end
 
     def parse_json(response)
-      MultiJson.load(response.body, symbolize_keys: GreenhouseIo.configuration.symbolize_keys)
+      JSON.parse(response.body, symbolize_names: GreenhouseIo.configuration.symbolize_keys)
     end
 
     def basic_auth
