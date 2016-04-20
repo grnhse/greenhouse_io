@@ -2,6 +2,12 @@
 
 This project follows [semantic versioning](http://semver.org/).  This changelog follows suggestions from [keepachangelog.com](http://keepachangelog.com/).
 
+## Version 2.3.1
+Released 2016-04-20.
+
+#### Added
+- Added method `create_candidate_note`.  Thanks for contributing, [@jleven](https://github.com/jleven)!
+
 ## Version 2.3.0
 Released 2016-02-13.
 
