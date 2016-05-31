@@ -44,11 +44,11 @@ module GreenhouseIo
       get_from_harvest_api "/applications#{path_id(id)}", options
     end
 
-    def application_offers(id, options = {})
+    def offers_for_application(id, options = {})
       get_from_harvest_api "/applications/#{id}/offers", options
     end
 
-    def application_current_offer(id, options = {})
+    def current_offer_for_application(id, options = {})
       get_from_harvest_api "/applications/#{id}/offers/current_offer", options
     end
 
