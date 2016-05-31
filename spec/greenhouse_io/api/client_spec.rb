@@ -634,5 +634,46 @@ describe GreenhouseIo::Client do
         end
       end
     end
+
+    describe "#offers_for_application" do
+      before do
+        VCR.use_cassette('client/offers_for_application') do
+          @offers = @client.offers_for_application(123)
+        end
+      end
+
+      it "returns a response" do
+        expect(@offers).to_not be_nil
+      end
+
+      it "returns an array of offers" do
+        expect(@offers).to be_an_instance_of(Array)
+
+        return unless @offers.size > 0
+        expect(@offers.first).to have_key(:application_id)
+        expect(@offers.first).to have_key(:version)
+        expect(@offers.first).to have_key(:status)
+      end
+    end
+
+    describe "#current_offer_for_application" do
+      before do
+        VCR.use_cassette('client/current_offer_for_application') do
+          @offer = @client.current_offer_for_application(123)
+        end
+      end
+
+      it "returns a response" do
+        expect(@offer).to_not be_nil
+      end
+
+      it "returns an offer object" do
+        expect(@offer).to be_an_instance_of(Hash)
+        expect(@offer[:id]).to be_a(Integer).and be > 0
+        expect(@offer[:created_at]).to be_a(String)
+        expect(@offer[:version]).to be_a(Integer).and be > 0
+        expect(@offer[:status]).to be_a(String)
+      end
+    end
   end
 end
