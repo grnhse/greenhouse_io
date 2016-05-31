@@ -183,6 +183,8 @@ Methods for which an `id` is **required**:
 * `activity_feed` *(requires a candidate ID)*
 * `scorecards` *(requires an application ID)*
 * `scheduled_interviews` *(requires an application ID)*
+* `offers_for_application` *(requires an application ID)*
+* `current_offer_for_application` *(requires an application ID)*
 * `stages` *(requires a job ID)*
 * `job_post` *(requires a job ID)*
 * `create_candidate_note` *(requires a candidate ID)*

@@ -2,6 +2,12 @@
 
 This project follows [semantic versioning](http://semver.org/).  This changelog follows suggestions from [keepachangelog.com](http://keepachangelog.com/).
 
+## Version 2.5.0
+Released 2016-05-31.  Contributed by [@theshanx](https://github.com/theshanx).  Thanks!  :)
+
+#### Added
+- Added methods for retrieving offers for an application: `current_offer_for_application` and `offers_for_application`
+
 ## Version 2.4.0
 Released 2016-04-20.  Contributed by [@mariochavez](https://github.com/mariochavez) -- thank you!
 
