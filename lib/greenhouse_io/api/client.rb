@@ -69,7 +69,11 @@ module GreenhouseIo
     end
 
     def stages(id, options = {})
-      get_from_harvest_api "/jobs/#{id}/stages", options
+      if id.present?
+        get_from_harvest_api "/jobs/#{id}/stages", options
+      else
+        get_from_harvest_api "/stages", options
+      end
     end
 
     def job_post(id, options = {})
