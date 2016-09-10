@@ -5,7 +5,7 @@ module GreenhouseIo
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id]
 
-    attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
+    attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link, :logger
     base_uri 'https://harvest.greenhouse.io/v1'
 
     def initialize(api_token = nil)

@@ -1,6 +1,7 @@
 module GreenhouseIo
   module API
     def get_response(url, options)
+      @logger.info "Greenhouse GET #{url}" if @logger
       self.class.get(url, options)
     end
 
