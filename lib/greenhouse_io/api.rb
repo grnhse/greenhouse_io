@@ -10,7 +10,7 @@ module GreenhouseIo
     end
 
     def parse_json(response)
-      JSON.parse(response.body, symbolize_names: GreenhouseIo.configuration.symbolize_keys)
+      Oj.load(response.body, mode: :compat, symbol_keys: GreenhouseIo.configuration.symbolize_keys)
     end
 
     def basic_auth
