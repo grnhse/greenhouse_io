@@ -40,6 +40,16 @@ module GreenhouseIo
       )
     end
 
+    def move_job_application(application_id, from_stage_id, to_stage_id, on_behalf_of)
+      post_to_harvest_api(
+        "/applications/#{application_id}/move", { 
+          from_stage_id: from_stage_id, 
+          to_stage_id: to_stage_id
+        },
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
     def applications(id = nil, options = {})
       get_from_harvest_api "/applications#{path_id(id)}", options
     end
