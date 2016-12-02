@@ -74,6 +74,10 @@ module GreenhouseIo
       get_from_harvest_api "/applications/#{id}/scheduled_interviews", options
     end
 
+    def all_scheduled_interviews(id = nil, options = {})
+      get_from_harvest_api "/scheduled_interviews/#{id}", options
+    end
+
     def jobs(id = nil, options = {})
       get_from_harvest_api "/jobs#{path_id(id)}", options
     end
