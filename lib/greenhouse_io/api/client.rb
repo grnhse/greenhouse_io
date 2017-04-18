@@ -32,10 +32,26 @@ module GreenhouseIo
       get_from_harvest_api "/candidates/#{id}/activity_feed", options
     end
 
-    def create_candidate_note(candidate_id, note_hash, on_behalf_of)
+    def create_candidate_note(candidate_id, body, on_behalf_of)
       post_to_harvest_api(
         "/candidates/#{candidate_id}/activity_feed/notes",
-        note_hash,
+        body,
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
+    def create_candidate(body, on_behalf_of)
+      post_to_harvest_api(
+        "/candidates",
+        body,
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
+    def reject_application(candidate_id, body, on_behalf_of)
+      post_to_harvest_api(
+        "/applications/#{candidate_id}/reject",
+        body,
         { 'On-Behalf-Of' => on_behalf_of.to_s }
       )
     end
@@ -83,8 +99,6 @@ module GreenhouseIo
     def sources(id = nil, options = {})
       get_from_harvest_api "/sources#{path_id(id)}", options
     end
-
-    private
 
     def path_id(id = nil)
       "/#{id}" unless id.nil?
