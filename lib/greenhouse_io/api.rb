@@ -15,5 +15,9 @@ module GreenhouseIo
     def basic_auth
       { :username => self.api_token }
     end
+
+    def api_auth_header
+      { "Authorization" => "Bearer #{self.api_token}" }
+    end
   end
 end
