@@ -1,6 +1,6 @@
 module GreenhouseIo
   class JobBoard
-    include HTTMultiParty
+    include HTTParty
     include GreenhouseIo::API
     attr_accessor :api_token, :organization
     base_uri 'https://api.greenhouse.io/v1'
