@@ -367,6 +367,50 @@ describe GreenhouseIo::Client do
       end
     end
 
+    describe "#update_application" do
+      it "update the specified application" do
+        VCR.use_cassette('client/update_application') do
+          update_application = @client.update_application(
+            64087658,
+            {
+                source_id: 130370
+            },
+            509925
+          )
+          expect(update_application).to_not be_nil
+          expect(update_application[:source][:id]).to eq 130370
+        end
+      end
+
+      it "errors when given invalid On-Behalf-Of id" do
+        VCR.use_cassette('client/update_application_invalid_on_behalf_of') do
+          expect {
+            @client.update_application(
+              64087658,
+              {
+                  source_id: 130370
+              },
+              101010
+            )
+          }.to raise_error(GreenhouseIo::Error)
+        end
+      end
+
+      it "errors when given an invalid application id" do
+        VCR.use_cassette('client/update_application_invalid_candidate_id') do
+          expect {
+            @client.update_application(
+              1010101,
+              {
+                  source_id: 130370
+              },
+              509925
+            )
+          }.to raise_error(GreenhouseIo::Error)
+        end
+      end
+    end
+
     describe "#scorecards" do
       before do
         VCR.use_cassette('client/scorecards') do
