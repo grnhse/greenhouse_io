@@ -44,6 +44,14 @@ module GreenhouseIo
       get_from_harvest_api "/applications#{path_id(id)}", options
     end
 
+    def update_application(id, options, on_behalf_of)
+      patch_to_harvest_api(
+        "/applications/#{id}",
+        options,
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
     def offers_for_application(id, options = {})
       get_from_harvest_api "/applications/#{id}/offers", options
     end
@@ -96,7 +104,7 @@ module GreenhouseIo
 
     def get_from_harvest_api(url, options = {})
       response = get_response(url, {
-        :query => permitted_options(options), 
+        :query => permitted_options(options),
         :basic_auth => basic_auth
       })
 
@@ -111,6 +119,22 @@ module GreenhouseIo
 
     def post_to_harvest_api(url, body, headers)
       response = post_response(url, {
+        :body => JSON.dump(body),
+        :basic_auth => basic_auth,
+        :headers => headers
+      })
+
+      set_headers_info(response.headers)
+
+      if response.code == 200
+        parse_json(response)
+      else
+        raise GreenhouseIo::Error.new(response.code)
+      end
+    end
+
+    def patch_to_harvest_api(url, body, headers)
+      response = patch_response(url, {
         :body => JSON.dump(body),
         :basic_auth => basic_auth,
         :headers => headers
