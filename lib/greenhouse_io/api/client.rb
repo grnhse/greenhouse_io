@@ -3,7 +3,7 @@ module GreenhouseIo
     include HTTMultiParty
     include GreenhouseIo::API
 
-    PERMITTED_OPTIONS = [:page, :per_page, :job_id, :created_before, :created_after, :updated_after, :updated_before, :last_activity_after ]
+    PERMITTED_OPTIONS = [:page, :per_page, :job_id, :created_before, :created_after, :updated_after, :updated_before, :last_activity_after, :status ]
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link, :logger
     base_uri 'https://harvest.greenhouse.io/v1'
@@ -109,19 +109,27 @@ module GreenhouseIo
     end
 
     def permitted_options(options)
-      options.select { |key, value| PERMITTED_OPTIONS.include? key }
+      options
+      #options.select { |key, value| PERMITTED_OPTIONS.include? key }
     end
 
     def get_from_harvest_api(url, options = {})
-      response = get_response(url, {
-        :query => permitted_options(options), 
-        :basic_auth => basic_auth
-      })
+      parse_response = options.fetch(:parse_response, true)
+
+      httparty_options = {
+        :query => permitted_options(options),
+        :basic_auth => basic_auth,
+      }
+      response = get_response(url, httparty_options)
 
       set_headers_info(response.headers)
 
-      if response.code == 200
-        parse_json(response)
+      if (200..299).include?(response.code)
+        if parse_response
+          parse_json(response)
+        else
+          response
+        end
       else
         raise GreenhouseIo::Error.new(response.code)
       end
