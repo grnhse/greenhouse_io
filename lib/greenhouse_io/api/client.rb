@@ -42,9 +42,19 @@ module GreenhouseIo
 
     def move_job_application(application_id, from_stage_id, to_stage_id, on_behalf_of)
       post_to_harvest_api(
-        "/applications/#{application_id}/move", { 
-          from_stage_id: from_stage_id, 
+        "/applications/#{application_id}/move", {
+          from_stage_id: from_stage_id,
           to_stage_id: to_stage_id
+        },
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
+    def transfer_job_application(application_id, to_job_id, on_behalf_of, to_stage_id: nil)
+      post_to_harvest_api(
+        "/applications/#{application_id}/transfer_to_job", {
+          new_job_id: to_job_id,
+          new_stage_id: to_stage_id
         },
         { 'On-Behalf-Of' => on_behalf_of.to_s }
       )
