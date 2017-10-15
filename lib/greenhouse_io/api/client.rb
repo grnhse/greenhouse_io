@@ -16,6 +16,14 @@ module GreenhouseIo
       get_from_harvest_api "/offices#{path_id(id)}", options
     end
 
+    def rejection_reasons(id = nil, options = {})
+      get_from_harvest_api "/rejection_reasons#{path_id(id)}", options
+    end
+
+    def email_templates(id = nil, options = {})
+      get_from_harvest_api "/email_templates#{path_id(id)}", options
+    end
+
     def offers(id = nil, options = {})
       get_from_harvest_api "/offers#{path_id(id)}", options
     end
