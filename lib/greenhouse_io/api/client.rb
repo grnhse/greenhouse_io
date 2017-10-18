@@ -58,6 +58,27 @@ module GreenhouseIo
       )
     end
 
+    def reject_job_application(application_id, on_behalf_of, rejection_email_id: nil,
+                               send_email_at: nil, notes: nil, rejection_reason_id: nil)
+      params = {}
+      params[:rejection_reason_id] = rejection_reason_id if rejection_reason_id
+      params[:notes] = notes if notes.present?
+      if rejection_email_id
+        params[:rejection_email] = {
+          email_template_id: rejection_email_id,
+        }
+        if send_email_at
+          params[:rejection_email][:send_email_at] = send_email_at
+        end
+      end
+
+      post_to_harvest_api(
+        "/applications/#{application_id}/reject",
+        params,
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
     def transfer_job_application(application_id, to_job_id, on_behalf_of, to_stage_id: nil)
       post_to_harvest_api(
         "/applications/#{application_id}/transfer_to_job", {
@@ -149,7 +170,7 @@ module GreenhouseIo
           response
         end
       else
-        raise GreenhouseIo::Error.new(response.code)
+        raise GreenhouseIo::Error.new(response, response.code)
       end
     end
 
@@ -162,10 +183,10 @@ module GreenhouseIo
 
       set_headers_info(response.headers)
 
-      if response.code == 200
+      if (200..299).include?(response.code)
         parse_json(response)
       else
-        raise GreenhouseIo::Error.new(response.code)
+        raise GreenhouseIo::Error.new(response, response.code)
       end
     end
 
