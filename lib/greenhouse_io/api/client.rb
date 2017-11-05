@@ -68,7 +68,7 @@ module GreenhouseIo
           email_template_id: rejection_email_id,
         }
         if send_email_at
-          params[:rejection_email][:send_email_at] = send_email_at
+          params[:rejection_email][:send_email_at] = send_email_at.utc.iso8601
         end
       end
 
