@@ -58,6 +58,7 @@ module GreenhouseIo
       )
     end
 
+    # NOTE: due to a bug in the Greenhouse API, send_email_at must be in eastern time
     def reject_job_application(application_id, on_behalf_of, rejection_email_id: nil,
                                send_email_at: nil, notes: nil, rejection_reason_id: nil)
       params = {}
@@ -68,7 +69,7 @@ module GreenhouseIo
           email_template_id: rejection_email_id,
         }
         if send_email_at
-          params[:rejection_email][:send_email_at] = send_email_at.utc.iso8601
+          params[:rejection_email][:send_email_at] = send_email_at.iso8601
         end
       end
 
