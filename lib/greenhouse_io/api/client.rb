@@ -36,6 +36,10 @@ module GreenhouseIo
       get_from_harvest_api "/candidates#{path_id(id)}", options
     end
 
+    def candidate_tags(options = {})
+      get_from_harvest_api "/tags/candidate", options
+    end
+
     def activity_feed(id, options = {})
       get_from_harvest_api "/candidates/#{id}/activity_feed", options
     end
