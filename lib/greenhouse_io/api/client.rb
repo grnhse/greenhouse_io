@@ -40,6 +40,21 @@ module GreenhouseIo
       get_from_harvest_api "/tags/candidate", options
     end
 
+    def add_candidate_tag(candidate_id, tag_id, on_behalf_of)
+      put_to_harvest_api(
+        "/candidates/#{candidate_id}/tags/#{tag_id}",
+        {},
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
+    def delete_candidate_tag(candidate_id, tag_id, on_behalf_of)
+      delete_from_harvest_api(
+        "/candidates/#{candidate_id}/tags/#{tag_id}",
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
     def activity_feed(id, options = {})
       get_from_harvest_api "/candidates/#{id}/activity_feed", options
     end
@@ -181,9 +196,32 @@ module GreenhouseIo
       end
     end
 
+    def put_to_harvest_api(url, body, headers)
+      put_or_post(url, body, headers, :put_response)
+    end
+
     def post_to_harvest_api(url, body, headers)
-      response = post_response(url, {
+      put_or_post(url, body, headers, :post_response)
+    end
+
+    def put_or_post(url, body, headers, method)
+      response = send(method, url, {
         :body => JSON.dump(body),
+        :basic_auth => basic_auth,
+        :headers => headers
+      })
+
+      set_headers_info(response.headers)
+
+      if (200..299).include?(response.code)
+        parse_json(response)
+      else
+        raise GreenhouseIo::Error.new(response, response.code)
+      end
+    end
+
+    def delete_from_harvest_api(url, headers)
+      response = delete(url, {
         :basic_auth => basic_auth,
         :headers => headers
       })
