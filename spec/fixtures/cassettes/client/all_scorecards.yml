@@ -2,11 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://123FakeToken:@harvest.greenhouse.io/v1/scorecards/
+    uri: https://harvest.greenhouse.io/v1/scorecards/
     body:
       encoding: US-ASCII
       string: ''
-    headers: {}
+    headers:
+      Authorization:
+      - Basic MTIzRmFrZVRva2VuOg==
   response:
     status:
       code: 200

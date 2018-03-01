@@ -2,11 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://123FakeToken:@harvest.greenhouse.io/v1/jobs/4690/job_post
+    uri: https://harvest.greenhouse.io/v1/jobs/4690/job_post
     body:
       encoding: US-ASCII
       string: ''
-    headers: {}
+    headers:
+      Authorization:
+      - Basic MTIzRmFrZVRva2VuOg==
   response:
     status:
       code: 200
@@ -44,6 +46,6 @@ http_interactions:
         Profile\",\"type\":\"short_text\",\"values\":[]},{\"required\":false,\"private\":false,\"label\":\"Website\",\"type\":\"short_text\",\"values\":[]},{\"required\":true,\"private\":false,\"label\":\"In
         a few sentences, tell us what makes you unique\",\"type\":\"long_text\",\"values\":[]},{\"required\":true,\"private\":false,\"label\":\"In
         a few sentences, tell us why this job, why now?\",\"type\":\"long_text\",\"values\":[]}]}"
-    http_version: 
+    http_version:
   recorded_at: Sun, 11 May 2014 23:33:43 GMT
 recorded_with: VCR 2.5.0

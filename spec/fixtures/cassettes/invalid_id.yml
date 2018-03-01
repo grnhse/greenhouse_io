@@ -6,7 +6,9 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ''
-    headers: {}
+    headers:
+      Authorization:
+      - Basic MTIzRmFrZVRva2VuOg==
   response:
     status:
       code: 400
@@ -35,6 +37,6 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ! '{"error":"Could not find a job with id ''123'' for generalassembly"}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 16 Sep 2013 22:55:58 GMT
 recorded_with: VCR 2.5.0

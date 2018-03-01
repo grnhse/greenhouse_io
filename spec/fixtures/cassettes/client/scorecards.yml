@@ -2,11 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://123FakeToken:@harvest.greenhouse.io/v1/applications/1/scorecards
+    uri: https://harvest.greenhouse.io/v1/applications/1/scorecards
     body:
       encoding: US-ASCII
       string: ''
-    headers: {}
+    headers:
+      Authorization:
+      - Basic MTIzRmFrZVRva2VuOg==
   response:
     status:
       code: 200
@@ -32,6 +34,6 @@ http_interactions:
       encoding: UTF-8
       string: "[{\"interview\":\"Task Follow Up\",\"interviewed_at\":\"2014-01-13T00:00:00Z\",\"submitted_by\":{\"id\":3850,\"name\":\"Test User\"},\"submitted_at\":\"2014-01-13T22:06:55Z\",\"overall_recommendation\":\"no_decision\",\"ratings\":{\"definitely_not\":[],\"no\":[],\"mixed\":[],\"yes\":[],\"strong_yes\":[]},\"questions\":[{\"id\":null,\"question\":\"Key
         Take-Aways\",\"answer\":\"\"},{\"id\":null,\"question\":\"Private Notes\",\"answer\":\"\"}]}]"
-    http_version: 
+    http_version:
   recorded_at: Sun, 11 May 2014 06:50:37 GMT
 recorded_with: VCR 2.5.0

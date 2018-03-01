@@ -2,11 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://123FakeToken:@harvest.greenhouse.io/v1/applications
+    uri: https://harvest.greenhouse.io/v1/applications
     body:
       encoding: US-ASCII
       string: ''
-    headers: {}
+    headers:
+      Authorization:
+      - Basic MTIzRmFrZVRva2VuOg==
   response:
     status:
       code: 200
@@ -38,6 +40,6 @@ http_interactions:
         Phone Screen\"}},{\"id\":1,\"person_id\":1,\"prospect\":false,\"applied_at\":\"2012-03-17T00:00:00Z\",\"last_activity_at\":\"2013-10-23T16:00:33Z\",\"source\":null,\"credited_to\":null,\"jobs\":[{\"id\":4385,\"name\":\"Educational
         Programs Producer\"}],\"status\":\"accepted\",\"current_stage\":{\"id\":12,\"name\":\"Application
         Review\"}}]"
-    http_version: 
+    http_version:
   recorded_at: Wed, 23 Apr 2014 23:45:19 GMT
 recorded_with: VCR 2.5.0

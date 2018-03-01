@@ -2,11 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://123FakeToken:@harvest.greenhouse.io/v1/offices/220
+    uri: https://harvest.greenhouse.io/v1/offices/220
     body:
       encoding: US-ASCII
       string: ''
-    headers: {}
+    headers:
+      Authorization:
+      - Basic MTIzRmFrZVRva2VuOg==
   response:
     status:
       code: 200
@@ -31,6 +33,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "{\"id\":220,\"name\":\"Boston\",\"location\":{\"name\":\"Boston, MA\"}}"
-    http_version: 
+    http_version:
   recorded_at: Mon, 21 Apr 2014 23:59:11 GMT
 recorded_with: VCR 2.5.0
