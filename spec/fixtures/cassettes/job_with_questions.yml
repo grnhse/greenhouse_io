@@ -6,7 +6,9 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ''
-    headers: {}
+    headers:
+      Authorization:
+      - Basic MTIzRmFrZVRva2VuOg==
   response:
     status:
       code: 200
@@ -80,6 +82,6 @@ http_interactions:
         Letter","fields":[{"name":"cover_letter","type":"input_file"},{"name":"cover_letter_text","type":"textarea"}]},{"required":false,"label":"LinkedIn
         Profile","fields":[{"name":"question_2720","type":"input_text"}]},{"required":false,"label":"Website","fields":[{"name":"question_2721","type":"input_text"}]},{"required":false,"label":"How
         did you hear about this job?","fields":[{"name":"question_2722","type":"input_text"}]}]}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 16 Sep 2013 16:18:12 GMT
 recorded_with: VCR 2.5.0

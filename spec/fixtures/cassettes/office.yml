@@ -6,7 +6,9 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ''
-    headers: {}
+    headers:
+      Authorization:
+      - Basic MTIzRmFrZVRva2VuOg==
   response:
     status:
       code: 200
@@ -40,6 +42,6 @@ http_interactions:
         Analyst","updated_at":"2013-09-12T21:01:50Z","location":{"name":"New York"},"absolute_url":"http://boards.greenhouse.io/generalassembly/jobs/722"}]},{"id":0,"name":"No
         Department","jobs":[{"id":721,"title":"Application developer","updated_at":"2013-09-12T21:01:50Z","location":{"name":"New
         York, NY"},"absolute_url":"http://boards.greenhouse.io/generalassembly/jobs/721"}]}]}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 16 Sep 2013 16:04:22 GMT
 recorded_with: VCR 2.5.0

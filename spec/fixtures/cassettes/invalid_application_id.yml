@@ -2,11 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: https://123FakeToken:@boards-api.greenhouse.io/v1/applications
+    uri: https://api.greenhouse.io/v1/applications
     body:
       encoding: US-ASCII
       string: id=456&first_name=Gob&last_name=Bluth&email=gob%40bluth.com
-    headers: {}
+    headers:
+      authorization: Basic MTIzRmFrZVRva2Vu\n
+      content-type: application/json
   response:
     status:
       code: 200
@@ -39,6 +41,6 @@ http_interactions:
     body:
       encoding: US-ASCII
       string: ! '{"error":"Failed to save person","reason":"Job application not live"}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 17 Sep 2013 14:41:59 GMT
 recorded_with: VCR 2.5.0

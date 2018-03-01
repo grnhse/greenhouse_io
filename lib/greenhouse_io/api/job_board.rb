@@ -35,7 +35,7 @@ module GreenhouseIo
     end
 
     def apply_to_job(job_form_hash)
-      post_to_job_board_api('/applications', { :body => job_form_hash, :basic_auth => basic_auth })
+      post_to_job_board_api('/applications', { body: job_form_hash, headers: post_headers })
     end
 
     private
@@ -52,6 +52,10 @@ module GreenhouseIo
       else
         raise GreenhouseIo::Error.new(response.code)
       end
+    end
+
+    def post_headers
+      { 'Authorization' => 'Basic ' + Base64.encode64(api_token), 'Content-Type' => 'application/json' }
     end
 
     def post_to_job_board_api(url, options)
