@@ -2,11 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://123FakeToken:@harvest.greenhouse.io/v1/users
+    uri: https://harvest.greenhouse.io/v1/users
     body:
       encoding: US-ASCII
       string: ''
-    headers: {}
+    headers:
+      Authorization:
+      - Basic MTIzRmFrZVRva2VuOg==
   response:
     status:
       code: 200
@@ -33,6 +35,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "[{\"id\":10327,\"name\":\"Test User 1\",\"disabled\":false,\"site_admin\":false,\"emails\":[\"test_user@email.com\"]}]"
-    http_version: 
+    http_version:
   recorded_at: Sun, 11 May 2014 23:36:21 GMT
 recorded_with: VCR 2.5.0

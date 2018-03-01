@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://123FakeToken:@harvest.greenhouse.io/v1/candidates/1/activity_feed/notes
+    uri: https://harvest.greenhouse.io/v1/candidates/1/activity_feed/notes
     body:
       encoding: UTF-8
       string: '{"user_id":99,"message":"Candidate on vacation","visibility":"public"}'
@@ -37,6 +37,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"message":"Resource not found"}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 18 Apr 2016 19:41:44 GMT
 recorded_with: VCR 3.0.1

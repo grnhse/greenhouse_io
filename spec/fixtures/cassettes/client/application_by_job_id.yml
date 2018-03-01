@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://123FakeToken:@harvest.greenhouse.io/v1/applications?job_id=144371
+    uri: https://harvest.greenhouse.io/v1/applications?job_id=144371
     body:
       encoding: US-ASCII
       string: ''
@@ -134,6 +134,6 @@ http_interactions:
         Review"},"answers":[]},{"id":24709881,"candidate_id":13769693,"prospect":false,"applied_at":"2016-01-26T23:58:09Z","rejected_at":null,"last_activity_at":"2016-01-26T23:59:07Z","source":{"id":2,"public_name":"Jobs
         page on your website"},"credited_to":{"id":158108,"name":"Gordon Zheng"},"rejection_reason":null,"jobs":[{"id":144371,"name":"Good
         Cop"}],"status":"hired","current_stage":null,"answers":[]}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 27 Jan 2016 18:09:18 GMT
 recorded_with: VCR 3.0.1
