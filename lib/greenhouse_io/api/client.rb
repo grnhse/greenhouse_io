@@ -3,7 +3,7 @@ module GreenhouseIo
     include HTTMultiParty
     include GreenhouseIo::API
 
-    PERMITTED_OPTIONS = [:page, :per_page, :job_id, :created_before, :created_after, :updated_after, :updated_before, :last_activity_after, :status ]
+    PERMITTED_OPTIONS = [:page, :per_page, :job_id, :created_before, :created_after, :updated_after, :updated_before, :last_activity_after, :status, :candidate_ids ]
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link, :logger
     base_uri 'https://harvest.greenhouse.io/v1'
