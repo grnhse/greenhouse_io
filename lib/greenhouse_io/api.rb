@@ -1,7 +1,7 @@
 module GreenhouseIo
   module API
     def get_response(url, options)
-      @logger.info "Greenhouse GET #{url} #{options.inspect}" if @logger
+      @logger.info "Greenhouse GET #{url} #{options[:query].inspect}" if @logger
       self.class.get(url, options)
     end
 
