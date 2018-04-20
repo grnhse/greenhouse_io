@@ -143,6 +143,14 @@ module GreenhouseIo
       get_from_harvest_api "/jobs#{path_id(id)}", options
     end
 
+    def user_roles(id = nil, options = {})
+      get_from_harvest_api "/user_roles#{path_id(id)}", options
+    end
+
+    def user_permissions(user_id, options = {})
+      get_from_harvest_api "/users/#{user_id}/permissions/jobs", options
+    end
+
     def stages(id = nil, options = {})
       if id.present?
         get_from_harvest_api "/jobs/#{id}/stages", options
