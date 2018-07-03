@@ -141,8 +141,6 @@ describe GreenhouseIo::JobBoard do
       it "contains necessary headers for apply_to_job method" do
         expect(@client.send(:post_headers).fetch('Authorization')).not_to be_nil
         expect(@client.send(:post_headers).fetch('Authorization')).to eq('Basic ' + Base64.encode64(@client.api_token + ':'))
-        expect(@client.send(:post_headers).fetch('Content-Type')).not_to be_nil
-        expect(@client.send(:post_headers).fetch('Content-Type')).to eq('application/json')
       end
     end
 
