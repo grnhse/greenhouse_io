@@ -7,7 +7,7 @@ http_interactions:
       encoding: US-ASCII
       string: id=721&first_name=Richard&last_name=Feynman&email=richard123%40test.ga.co
     headers:
-      authorization: Basic MTIzRmFrZVRva2Vu\n
+      authorization: Basic MTIzRmFrZVRva2VuOg==
       content-type: application/json
   response:
     status:

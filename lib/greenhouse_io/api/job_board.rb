@@ -55,7 +55,7 @@ module GreenhouseIo
     end
 
     def post_headers
-      { 'Authorization' => 'Basic ' + Base64.encode64(api_token), 'Content-Type' => 'application/json' }
+      { 'Authorization' => 'Basic ' + Base64.encode64(api_token + ':'), 'Content-Type' => 'application/json' }
     end
 
     def post_to_job_board_api(url, options)
