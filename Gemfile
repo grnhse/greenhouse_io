@@ -5,7 +5,7 @@ group :development do
 end
 
 group :test do
-  gem "codeclimate-test-reporter", group: :test, require: nil
+  gem "simplecov", group: :test, require: false
 end
 
 gemspec
