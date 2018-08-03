@@ -1,5 +1,5 @@
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
+require 'simplecov'
+SimpleCov.start
 
 require 'rubygems'
 require 'bundler'
@@ -13,7 +13,6 @@ end
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/cassettes'
   config.hook_into :webmock
-  config.ignore_hosts 'codeclimate.com'
 end
 
 def restore_default_config
