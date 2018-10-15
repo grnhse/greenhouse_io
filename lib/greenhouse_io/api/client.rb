@@ -171,6 +171,10 @@ module GreenhouseIo
       get_from_harvest_api "/sources#{path_id(id)}", options
     end
 
+    def eeoc(id = nil, options = {})
+      get_from_harvest_api "/eeoc#{path_id(id)}", options
+    end
+
     private
 
     def path_id(id = nil)
