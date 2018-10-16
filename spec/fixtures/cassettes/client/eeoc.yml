@@ -1,0 +1,45 @@
+http_interactions:
+  - request:
+      method: get
+      uri: https://123FakeToken:@harvest.greenhouse.io/v1/eeoc
+      body:
+        encoding: US-ASCII
+        string: ''
+      headers:
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - '*/*'
+        User-Agent:
+          - Ruby
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Server:
+          - Cowboy
+        Connection:
+          - keep-alive
+        Date:
+          - Wed, 27 Jan 2016 00:27:44 GMT
+        Status:
+          - 200 OK
+        Content-Type:
+          - application/json;charset=utf-8
+        Content-Length:
+          - '400'
+        X-Ratelimit-Limit:
+          - '50'
+        X-Ratelimit-Remaining:
+          - '49'
+        X-Content-Type-Options:
+          - nosniff
+        Via:
+          - 1.1 vegur
+      body:
+        encoding: UTF-8
+        string: '[{"application_id": 123456789, "candidate_id": 123456789, "submitted_at": "2018-02-26T16:41:39.215Z", "race": {"id": 1, "description": "American Indian or Alaskan Native"}, "gender": {"id": 1, "description": "Male"}, "veteran_status": {"id": 3, "description": "I dont wish to answer"}, "disability_status": {"id": 2, "description": "No, I dont have a disability"}}]'
+      ? http_version
+    recorded_at: Wed, 27 Jan 2016 00:27:44 GMT
+recorded_with: VCR 3.0.1

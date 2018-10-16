@@ -64,7 +64,7 @@ describe GreenhouseIo::Client do
     end
 
     describe "#permitted_options" do
-      let(:options) { GreenhouseIo::Client::PERMITTED_OPTIONS + [:where] }
+      let(:options) { GreenhouseIo::Client::PERMITTED_OPTIONS }
 
       it "allows permitted options" do
         output = @client.send(:permitted_options, options)
@@ -589,6 +589,28 @@ describe GreenhouseIo::Client do
 
         it "returns an application's details" do
           expect(@source).to have_key(:name)
+        end
+      end
+    end
+
+    describe "#eeoc" do
+      context "given no id" do
+        before do
+          VCR.use_cassette('client/eeoc') do
+            @eeocs = @client.eeoc
+          end
+        end
+
+        it "returns a response" do
+          expect(@eeocs).to_not be_nil
+        end
+
+        it "returns an array of applications" do
+          expect(@eeocs).to be_an_instance_of(Array)
+        end
+
+        it "returns application details" do
+          expect(@eeocs.first).to have_key(:application_id)
         end
       end
     end

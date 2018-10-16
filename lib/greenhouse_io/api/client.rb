@@ -152,10 +152,10 @@ module GreenhouseIo
     end
 
     def stages(id = nil, options = {})
-      if id.present?
-        get_from_harvest_api "/jobs/#{id}/stages", options
-      else
+      if id.nil?
         get_from_harvest_api "/job_stages", options
+      else
+        get_from_harvest_api "/jobs/#{id}/stages", options
       end
     end
 
