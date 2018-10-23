@@ -152,10 +152,10 @@ module GreenhouseIo
     end
 
     def stages(id = nil, options = {})
-      if id.present?
-        get_from_harvest_api "/jobs/#{id}/stages", options
-      else
+      if id.nil?
         get_from_harvest_api "/job_stages", options
+      else
+        get_from_harvest_api "/jobs/#{id}/stages", options
       end
     end
 
@@ -169,6 +169,10 @@ module GreenhouseIo
 
     def sources(id = nil, options = {})
       get_from_harvest_api "/sources#{path_id(id)}", options
+    end
+
+    def eeoc(id = nil, options = {})
+      get_from_harvest_api "/eeoc#{path_id(id)}", options
     end
 
     private

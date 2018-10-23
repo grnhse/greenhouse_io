@@ -1,10 +1,11 @@
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
+# require "codeclimate-test-reporter"
+# CodeClimate::TestReporter.start
 
 require 'rubygems'
 require 'bundler'
 require 'webmock/rspec'
 require 'vcr'
+require 'oj'
 require 'greenhouse_io'
 
 RSpec.configure do |config|
