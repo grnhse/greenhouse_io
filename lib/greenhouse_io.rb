@@ -1,4 +1,4 @@
-require 'httmultiparty'
+require 'httparty'
 require 'json'
 
 require "greenhouse_io/version"

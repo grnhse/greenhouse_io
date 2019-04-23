@@ -6,14 +6,17 @@ module GreenhouseIo
     end
 
     def post_response(url, options)
+      @logger.info "Greenhouse POST #{url} #{options[:query].inspect}" if @logger
       self.class.post(url, options)
     end
 
     def put_response(url, options)
+      @logger.info "Greenhouse PUT #{url} #{options[:query].inspect}" if @logger
       self.class.put(url, options)
     end
 
     def delete(url, options)
+      @logger.info "Greenhouse DELETE #{url} #{options[:query].inspect}" if @logger
       self.class.delete(url, options)
     end
 

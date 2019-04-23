@@ -1,6 +1,6 @@
 module GreenhouseIo
   class Client
-    include HTTMultiParty
+    include HTTParty
     include GreenhouseIo::API
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id, :created_before, :created_after, :updated_after, :updated_before, :last_activity_after, :status, :candidate_ids ]
