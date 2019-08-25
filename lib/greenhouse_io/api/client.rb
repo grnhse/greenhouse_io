@@ -90,7 +90,8 @@ module GreenhouseIo
         if send_email_at
           # Note, Greenhouse has a bug with send_email_at timezones. We aren't using `iso8601` because
           # we don't want to specify the offset. Without an offset, it assumes eastern time.
-          params[:rejection_email][:send_email_at] = send_email_at.strftime("%Y-%m-%dT%H:%M:%S")
+          send_email_at_eastern = send_email_at.in_time_zone('Eastern Time (US & Canada)')
+          params[:rejection_email][:send_email_at] = send_email_at_eastern.strftime("%Y-%m-%dT%H:%M:%S")
         end
       end
 
