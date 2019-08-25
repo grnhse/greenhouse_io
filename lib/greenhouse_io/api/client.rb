@@ -228,6 +228,7 @@ module GreenhouseIo
       if (200..299).include?(response.code)
         parse_json(response)
       else
+        @logger.error "* ERROR during #{method} #{url}: #{response.body}" if @logger
         raise GreenhouseIo::Error.new(response, response.code)
       end
     end
