@@ -4,6 +4,9 @@ module GreenhouseIo
     include GreenhouseIo::API
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id]
+    PERMITTED_OPTIONS_PER_ENDPOINT = {
+      'offers' => [:status, :resolved_at]
+    }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
     base_uri 'https://harvest.greenhouse.io/v1'
@@ -94,9 +97,16 @@ module GreenhouseIo
       options.select { |key, value| PERMITTED_OPTIONS.include? key }
     end
 
-    def get_from_harvest_api(url, options = {})
+    def permitted_options_for_endpoint(options, endpoint)
+      options.select { |key, value| PERMITTED_OPTIONS_PER_ENDPOINT[endpoint].include? key }
+    end
+
+    def get_from_harvest_api(url, options = {}, endpoint = nil)
+      all_permitted_options = permitted_options(options)
+      all_permitted_options.merge!(permitted_options_for_endpoint(options, endpoint)) if endpoint
+
       response = get_response(url, {
-        :query => permitted_options(options), 
+        :query => all_permitted_options,
         :basic_auth => basic_auth
       })
 
