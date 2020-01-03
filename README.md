@@ -18,7 +18,7 @@ Add the gem to your application's Gemfile:
 
 Or install it yourself as:
 
-    $ gem install
+    $ gem install greenhouse_io
 
 ## API Documentation
 
