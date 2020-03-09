@@ -9,6 +9,7 @@ module GreenhouseIo
     end
 
     def parse_json(response)
+      # puts "response: #{response}"
       JSON.parse(response.body, symbolize_names: GreenhouseIo.configuration.symbolize_keys)
     end
 
