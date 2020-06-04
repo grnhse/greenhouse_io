@@ -15,6 +15,11 @@ module GreenhouseIo
       self.class.put(url, options)
     end
 
+    def patch_response(url, options)
+      @logger.info "Greenhouse PATCH #{url} #{options[:query]} #{options[:body]}" if @logger
+      self.class.patch(url, options)
+    end
+
     def delete(url, options)
       @logger.info "Greenhouse DELETE #{url} #{options[:query]}" if @logger
       self.class.delete(url, options)

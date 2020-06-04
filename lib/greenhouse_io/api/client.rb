@@ -112,6 +112,18 @@ module GreenhouseIo
       )
     end
 
+    def update_job(job_id, attrs, on_behalf_of)
+      patch_to_harvest_api(
+        "/jobs/#{job_id}", attrs,
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
+    # field_type: offer, candidate, application, job, rejection_question, or referral_question
+    def custom_fields(field_type, options = {})
+      get_from_harvest_api("/custom_fields/#{field_type}", options)
+    end
+
     def applications(id = nil, options = {})
       get_from_harvest_api "/applications#{path_id(id)}", options
     end
@@ -215,6 +227,10 @@ module GreenhouseIo
 
     def post_to_harvest_api(url, body, headers)
       put_or_post(url, body, headers, :post_response)
+    end
+
+    def patch_to_harvest_api(url, body, headers)
+      put_or_post(url, body, headers, :patch_response)
     end
 
     def put_or_post(url, body, headers, method)
