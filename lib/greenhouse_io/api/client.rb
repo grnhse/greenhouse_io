@@ -12,6 +12,10 @@ module GreenhouseIo
       @api_token = api_token || GreenhouseIo.configuration.api_token
     end
 
+    def eeoc(id = nil, options = {})
+      get_from_harvest_api "/eeoc#{path_id(id)}", options
+    end
+
     def offices(id = nil, options = {})
       get_from_harvest_api "/offices#{path_id(id)}", options
     end
