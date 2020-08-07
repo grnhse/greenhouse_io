@@ -41,7 +41,7 @@ module GreenhouseIo
 
     def delete_candidate(candidate_id, on_behalf_of)
       delete_with_harvest_api \
-        "/candidates/#{id}",
+        "/candidates/#{candidate_id}",
         { 'On-Behalf-Of' => on_behalf_of.to_s }
     end
 
