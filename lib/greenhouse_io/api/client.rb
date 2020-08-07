@@ -33,7 +33,7 @@ module GreenhouseIo
     end
 
     def create_candidate(candidate_hash, on_behalf_of)
-      post_harvest_api \
+      post_to_harvest_api \
         "/candidates",
         candidate_hash,
         { 'On-Behalf-Of' => on_behalf_of.to_s }
