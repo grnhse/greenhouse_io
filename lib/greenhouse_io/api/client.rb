@@ -133,6 +133,8 @@ module GreenhouseIo
 
       if response.code == 200
         parse_json(response)
+      elsif response.code == 201
+        parse_json(response)
       else
         raise GreenhouseIo::Error.new(response.code)
       end
