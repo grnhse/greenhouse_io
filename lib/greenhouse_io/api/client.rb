@@ -138,9 +138,8 @@ module GreenhouseIo
       end
     end
 
-    def delete_with_harvest_api(url, body, headers)
+    def delete_with_harvest_api(url, headers)
       response = delete_response(url, {
-        :body => JSON.dump(body),
         :basic_auth => basic_auth,
         :headers => headers
       })
