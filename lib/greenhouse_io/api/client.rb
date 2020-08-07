@@ -39,6 +39,12 @@ module GreenhouseIo
         { 'On-Behalf-Of' => on_behalf_of.to_s }
     end
 
+    def delete_candidate(candidate_id, on_behalf_of)
+      delete_with_harvest_api \
+        "/candidates/#{id}",
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+    end
+
     def create_candidate_note(candidate_id, note_hash, on_behalf_of)
       post_to_harvest_api(
         "/candidates/#{candidate_id}/activity_feed/notes",
