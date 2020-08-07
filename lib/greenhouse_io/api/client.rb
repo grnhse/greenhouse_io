@@ -132,6 +132,22 @@ module GreenhouseIo
       end
     end
 
+    def delete_with_harvest_api(url, body, headers)
+      response = delete_response(url, {
+        :body => JSON.dump(body),
+        :basic_auth => basic_auth,
+        :headers => headers
+      })
+
+      set_headers_info(response.headers)
+
+      if response.code == 200
+        parse_json(response)
+      else
+        raise GreenhouseIo::Error.new(response.code)
+      end
+    end
+
     def set_headers_info(headers)
       self.rate_limit = headers['x-ratelimit-limit'].to_i
       self.rate_limit_remaining = headers['x-ratelimit-remaining'].to_i
