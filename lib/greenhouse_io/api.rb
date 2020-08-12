@@ -8,6 +8,10 @@ module GreenhouseIo
       self.class.post(url, options)
     end
 
+    def patch_response(url, options)
+      self.class.patch(url, options)
+    end
+
     def delete_response(url, options)
       self.class.delete(url, options)
     end

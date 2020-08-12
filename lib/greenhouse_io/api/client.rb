@@ -118,12 +118,30 @@ module GreenhouseIo
       if response.code == 200
         parse_json(response)
       else
-        raise GreenhouseIo::Error.new(response.code)
+        raise GreenhouseIo::Error.new("Response code: #{response.code}, message: #{response.body}")
       end
     end
 
     def post_to_harvest_api(url, body, headers)
       response = post_response(url, {
+        :body => JSON.dump(body),
+        :basic_auth => basic_auth,
+        :headers => headers
+      })
+
+      set_headers_info(response.headers)
+
+      if response.code == 200
+        parse_json(response)
+      elsif response.code == 201
+        parse_json(response)
+      else
+        raise GreenhouseIo::Error.new("Response code: #{response.code}, message: #{response.body}")
+      end
+    end
+
+    def patch_with_harvest_api(url, body, headers)
+      response = patch_response(url, {
         :body => JSON.dump(body),
         :basic_auth => basic_auth,
         :headers => headers
@@ -150,8 +168,10 @@ module GreenhouseIo
 
       if response.code == 200
         parse_json(response)
+      elsif response.code == 201
+        parse_json(response)
       else
-        raise GreenhouseIo::Error.new(response.code)
+        raise GreenhouseIo::Error.new("Response code: #{response.code}, message: #{response.body}")
       end
     end
 
