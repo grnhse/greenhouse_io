@@ -1,27 +1,27 @@
 module GreenhouseIo
   module API
     def get_response(url, options)
-      @logger.info "Greenhouse GET #{url} #{options[:query]}" if @logger
+      @logger.debug "Greenhouse GET #{url} #{options[:query]}" if @logger
       self.class.get(url, options)
     end
 
     def post_response(url, options)
-      @logger.info "Greenhouse POST #{url} #{options[:query]} #{options[:body]}" if @logger
+      @logger.debug "Greenhouse POST #{url} #{options[:query]} #{options[:body]}" if @logger
       self.class.post(url, options)
     end
 
     def put_response(url, options)
-      @logger.info "Greenhouse PUT #{url} #{options[:query]} #{options[:body]}" if @logger
+      @logger.debug "Greenhouse PUT #{url} #{options[:query]} #{options[:body]}" if @logger
       self.class.put(url, options)
     end
 
     def patch_response(url, options)
-      @logger.info "Greenhouse PATCH #{url} #{options[:query]} #{options[:body]}" if @logger
+      @logger.debug "Greenhouse PATCH #{url} #{options[:query]} #{options[:body]}" if @logger
       self.class.patch(url, options)
     end
 
     def delete(url, options)
-      @logger.info "Greenhouse DELETE #{url} #{options[:query]}" if @logger
+      @logger.debug "Greenhouse DELETE #{url} #{options[:query]}" if @logger
       self.class.delete(url, options)
     end
 
