@@ -3,7 +3,7 @@ module GreenhouseIo
     include HTTMultiParty
     include GreenhouseIo::API
     attr_accessor :api_token, :organization
-    base_uri 'https://api.greenhouse.io/v1'
+    base_uri 'https://boards-api.greenhouse.io/v1'
 
     def initialize(api_token = nil, default_options = {})
       @api_token = api_token || GreenhouseIo.configuration.api_token
