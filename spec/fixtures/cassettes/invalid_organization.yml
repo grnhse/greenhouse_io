@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.greenhouse.io/v1/boards/not-real-inc/embed/offices
+    uri: https://boards-api.greenhouse.io/v1/boards/not-real-inc/embed/offices
     body:
       encoding: US-ASCII
       string: ''
