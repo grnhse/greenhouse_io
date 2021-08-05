@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.greenhouse.io/v1/applications
+    uri: https://boards-api.greenhouse.io/v1/applications
     body:
       encoding: US-ASCII
       string: id=721&first_name=Richard&last_name=Feynman&email=richard123%40test.ga.co

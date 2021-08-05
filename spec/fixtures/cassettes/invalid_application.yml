@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.greenhouse.io/v1/applications
+    uri: https://boards-api.greenhouse.io/v1/applications
     body:
       encoding: US-ASCII
       string: id=721&question_2720=not_required

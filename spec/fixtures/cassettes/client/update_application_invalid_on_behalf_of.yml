@@ -2,11 +2,12 @@
 http_interactions:
 - request:
     method: patch
-    uri: https://123FakeToken:@harvest.greenhouse.io/v1/applications/64087658
+    uri: https://harvest.greenhouse.io/v1/applications/64087658
     body:
       encoding: UTF-8
       string: '{"source_id":130370}'
     headers:
+      authorization: Basic MTIzRmFrZVRva2VuOg==
       On-Behalf-Of:
       - '101010'
   response:
