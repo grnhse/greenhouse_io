@@ -32,6 +32,22 @@ module GreenhouseIo
       get_from_harvest_api "/candidates/#{id}/activity_feed", options
     end
 
+    def create_candidate(hash, on_behalf_of)
+      post_to_harvest_api(
+        '/candidates',
+        hash,
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
+    def create_prospect(hash, on_behalf_of)
+      post_to_harvest_api(
+        '/prospects',
+        hash,
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
     def create_candidate_note(candidate_id, note_hash, on_behalf_of)
       post_to_harvest_api(
         "/candidates/#{candidate_id}/activity_feed/notes",
@@ -96,7 +112,7 @@ module GreenhouseIo
 
     def get_from_harvest_api(url, options = {})
       response = get_response(url, {
-        :query => permitted_options(options), 
+        :query => permitted_options(options),
         :basic_auth => basic_auth
       })
 
@@ -118,7 +134,7 @@ module GreenhouseIo
 
       set_headers_info(response.headers)
 
-      if response.code == 200
+      if response.success?
         parse_json(response)
       else
         raise GreenhouseIo::Error.new(response.code)
