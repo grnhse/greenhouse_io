@@ -697,5 +697,50 @@ describe GreenhouseIo::Client do
         expect(@offer[:status]).to be_a(String)
       end
     end
+
+    describe "#demographic_questions" do
+      context "given no id" do
+        before do
+          VCR.use_cassette('client/demographics') do
+            @demographics_questions_response = @client.demographic_questions
+          end
+        end
+
+        it "returns a response" do
+          expect(@demographics_questions_response).to_not be_nil
+          expect(@demographics_questions_response).to be_an_instance_of(Array)
+        end
+      end
+    end
+
+    describe "#demographic_answer_options" do
+      context "given no id" do
+        before do
+          VCR.use_cassette('client/demographics') do
+            @demographic_answer_options_response = @client.demographic_answer_options
+          end
+        end
+
+        it "returns a response" do
+          expect(@demographic_answer_options_response).to_not be_nil
+          expect(@demographic_answer_options_response).to be_an_instance_of(Array)
+        end
+      end
+    end
+
+    describe "#demographic_answers" do
+      context "given no id" do
+        before do
+          VCR.use_cassette('client/demographics') do
+            @demographic_answers_response = @client.demographic_answers
+          end
+        end
+
+        it "returns a response" do
+          expect(@demographic_answers_response).to_not be_nil
+          expect(@demographic_answers_response).to be_an_instance_of(Array)
+        end
+      end
+    end
   end
 end
