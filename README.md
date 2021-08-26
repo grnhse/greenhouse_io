@@ -122,6 +122,23 @@ gh_client = GreenhouseIo::Client.new
 gh_client.candidates
 ```
 
+#### Listing demographic answers
+```ruby
+gh_client.demigraphic_answers
+
+```
+
+#### Listing demographic answer options
+```ruby
+gh_client.demigraphic_answer_options
+
+```
+#### Listing demographic questions
+```ruby
+gh_client.demigraphic_questions
+
+```
+
 #### Creating a candidate note
 Use this method to attach a new note to a candidate.
 
@@ -177,6 +194,7 @@ Methods for which an `id` is optional:
 * `sources`
 * `all_scorecards`
 * `offers`
+* `demographics`
 
 Methods for which an `id` is **required**:
 

@@ -40,6 +40,18 @@ module GreenhouseIo
       get_from_harvest_api "/tags/candidate", options
     end
 
+    def demographic_questions(id = nil, options = {})
+      get_from_harvest_api "/demographics/questions#{path_id(id)}", options
+    end
+
+    def demographic_answer_options(id = nil, options = {})
+      get_from_harvest_api "/demographics/answer_options#{path_id(id)}", options
+    end
+
+    def demographic_answers(id = nil, options = {})
+      get_from_harvest_api "/demographics/answers#{path_id(id)}", options
+    end
+
     def add_candidate_tag(candidate_id, tag_id, on_behalf_of)
       put_to_harvest_api(
         "/candidates/#{candidate_id}/tags/#{tag_id}",
