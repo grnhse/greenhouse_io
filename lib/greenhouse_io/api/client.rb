@@ -52,6 +52,10 @@ module GreenhouseIo
       get_from_harvest_api "/demographics/answers#{path_id(id)}", options
     end
 
+    def demographic_question_sets(id = nil, options = {})
+      get_from_harvest_api "/demographics/question_sets#{path_id(id)}", options
+    end
+
     def add_candidate_tag(candidate_id, tag_id, on_behalf_of)
       put_to_harvest_api(
         "/candidates/#{candidate_id}/tags/#{tag_id}",

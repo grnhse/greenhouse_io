@@ -742,5 +742,20 @@ describe GreenhouseIo::Client do
         end
       end
     end
+
+    describe "#demographic_question_sets" do
+      context "given no id" do
+        before do
+          VCR.use_cassette('client/demographics') do
+            @demographic_answers_response = @client.demographic_question_sets
+          end
+        end
+
+        it "returns a response" do
+          expect(@demographic_answers_response).to_not be_nil
+          expect(@demographic_answers_response).to be_an_instance_of(Array)
+        end
+      end
+    end
   end
 end

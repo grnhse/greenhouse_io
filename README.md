@@ -124,18 +124,25 @@ gh_client.candidates
 
 #### Listing demographic answers
 ```ruby
-gh_client.demigraphic_answers
+gh_client.demographic_answers
 
 ```
 
 #### Listing demographic answer options
 ```ruby
-gh_client.demigraphic_answer_options
+gh_client.demographic_answer_options
 
 ```
+
 #### Listing demographic questions
 ```ruby
-gh_client.demigraphic_questions
+gh_client.demographic_questions
+
+```
+
+#### Listing demographic question sets
+```ruby
+gh_client.demographic_question_sets
 
 ```
 
