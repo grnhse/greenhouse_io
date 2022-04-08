@@ -5,7 +5,8 @@ module GreenhouseIo
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id]
     PERMITTED_OPTIONS_PER_ENDPOINT = {
-      'offers' => [:status, :resolved_at]
+      'offers' => [:status, :resolved_at],
+      'jobs' => [:status]
     }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
