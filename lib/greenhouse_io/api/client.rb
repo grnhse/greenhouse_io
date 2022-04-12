@@ -6,7 +6,8 @@ module GreenhouseIo
     PERMITTED_OPTIONS = [:page, :per_page, :job_id]
     PERMITTED_OPTIONS_PER_ENDPOINT = {
       'offers' => [:status, :resolved_at],
-      'jobs' => [:status]
+      'jobs' => [:status],
+      'job_posts' => [:active, :live, :created_after]
     }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
@@ -69,7 +70,7 @@ module GreenhouseIo
     end
 
     def jobs(id = nil, options = {})
-      get_from_harvest_api "/jobs#{path_id(id)}", options
+      get_from_harvest_api "/jobs#{path_id(id)}", options, 'jobs'
     end
 
     def stages(id, options = {})
@@ -78,6 +79,10 @@ module GreenhouseIo
 
     def job_post(id, options = {})
       get_from_harvest_api "/jobs/#{id}/job_post", options
+    end
+
+    def job_posts(options = {})
+      get_from_harvest_api('/job_posts', options, 'job_posts')
     end
 
     def users(id = nil, options = {})
@@ -105,6 +110,9 @@ module GreenhouseIo
     def get_from_harvest_api(url, options = {}, endpoint = nil)
       all_permitted_options = permitted_options(options)
       all_permitted_options.merge!(permitted_options_for_endpoint(options, endpoint)) if endpoint
+
+      p endpoint
+      p all_permitted_options
 
       response = get_response(url, {
         :query => all_permitted_options,
