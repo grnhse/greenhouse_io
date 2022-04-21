@@ -31,7 +31,7 @@ module GreenhouseIo
     end
 
     def candidates(id = nil, options = {})
-      get_from_harvest_api "/candidates#{path_id(id)}", options
+      get_from_harvest_api "/candidates#{path_id(id)}", options, 'candidates'
     end
 
     def activity_feed(id, options = {})
