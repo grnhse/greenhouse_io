@@ -5,6 +5,7 @@ module GreenhouseIo
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id]
     PERMITTED_OPTIONS_PER_ENDPOINT = {
+      'candidates' => [:email],
       'offers' => [:status, :resolved_at],
       'jobs' => [:status],
       'job_posts' => [:active, :live, :created_after]
