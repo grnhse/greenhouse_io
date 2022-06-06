@@ -79,7 +79,7 @@ module GreenhouseIo
     end
 
     def job_post(id, options = {})
-      get_from_harvest_api "/job_posts/#{id}", options
+      get_from_harvest_api "/jobs/#{id}/job_post", options
     end
 
     def job_posts(options = {})
