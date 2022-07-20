@@ -2,6 +2,13 @@
 
 This project follows [semantic versioning](http://semver.org/).  This changelog follows suggestions from [keepachangelog.com](http://keepachangelog.com/).
 
+## Version 3.0.0
+
+#### Added
+- Upped the Ruby version required to last supported branch: Ruby 2.5
+- Refreshed and relaxed gem versions requirements
+- Switched from HTTMultiParty (unsupported) to HTTParty since multipart uplodad is supported by HTTParty
+
 ## Version 2.5.0
 Released 2016-05-31.  Contributed by [@theshanx](https://github.com/theshanx).  Thanks!  :)
 

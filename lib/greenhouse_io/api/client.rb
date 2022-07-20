@@ -1,6 +1,6 @@
 module GreenhouseIo
   class Client
-    include HTTMultiParty
+    include HTTParty
     include GreenhouseIo::API
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id]
@@ -96,7 +96,7 @@ module GreenhouseIo
 
     def get_from_harvest_api(url, options = {})
       response = get_response(url, {
-        :query => permitted_options(options), 
+        :query => permitted_options(options),
         :basic_auth => basic_auth
       })
 

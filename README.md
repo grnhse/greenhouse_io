@@ -8,7 +8,7 @@ Version](https://badge.fury.io/rb/greenhouse_io.png)](http://badge.fury.io/rb/gr
 
 A Ruby interface to
 [Greenhouse.io's](https://app.greenhouse.io/jobboard/jsonp_instructions)
-API (requires Ruby 1.9.3 or greater).
+API (requires Ruby 2.5 or greater).
 
 ## Installation
 
@@ -23,10 +23,10 @@ Or install it yourself as:
 ## API Documentation
 
 Documentation for the Harvest and Job Board web APIs can be found at [developers.greenhouse.io](https://developers.greenhouse.io).
-    
+
 ## Configuration
 
-You can assign default configuration values when using this gem.  
+You can assign default configuration values when using this gem.
 Here is an example `config/initializers/greenhouse_io.rb` file used in a Rails application:
 
 ```ruby
