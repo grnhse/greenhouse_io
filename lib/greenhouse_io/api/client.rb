@@ -22,8 +22,12 @@ module GreenhouseIo
       get_from_harvest_api "/offices#{path_id(id)}", options
     end
 
-    def offers(id = nil, options = {})
+    def offer(id, options = {})
       get_from_harvest_api "/offers#{path_id(id)}", options
+    end
+
+    def offers(options = {})
+      paginated_get("/offers", options)
     end
 
     def departments(id = nil, options = {})
@@ -31,7 +35,7 @@ module GreenhouseIo
     end
 
     def candidates(id = nil, options = {})
-      get_from_harvest_api "/candidates#{path_id(id)}", options, 'candidates'
+      paginated_get("/candidates#{path_id(id)}", options, 'candidates')
     end
 
     def activity_feed(id, options = {})
@@ -71,7 +75,7 @@ module GreenhouseIo
     end
 
     def jobs(id = nil, options = {})
-      get_from_harvest_api "/jobs#{path_id(id)}", options, 'jobs'
+      paginated_get("/jobs#{path_id(id)}", options, 'jobs')
     end
 
     def stages(id, options = {})
@@ -108,12 +112,27 @@ module GreenhouseIo
       options.select { |key, value| PERMITTED_OPTIONS_PER_ENDPOINT[endpoint].include? key }
     end
 
+    def paginated_get(url, params = {}, endpoint = nil)
+      results = []
+      page = 1
+
+      loop do
+        params[:page] = page
+        response = get_from_harvest_api(url, params, endpoint)
+
+        results.concat(response)
+
+        page+=1
+        break if response.size == 0
+      end
+
+      results
+    end
+
+
     def get_from_harvest_api(url, options = {}, endpoint = nil)
       all_permitted_options = permitted_options(options)
       all_permitted_options.merge!(permitted_options_for_endpoint(options, endpoint)) if endpoint
-
-      p endpoint
-      p all_permitted_options
 
       response = get_response(url, {
         :query => all_permitted_options,
@@ -122,11 +141,8 @@ module GreenhouseIo
 
       set_headers_info(response.headers)
 
-      if response.code == 200
-        parse_json(response)
-      else
-        raise GreenhouseIo::Error.new(response.code)
-      end
+      raise GreenhouseIo::Error.new(response.code) unless response.code == 200
+      return parse_json(response)
     end
 
     def post_to_harvest_api(url, body, headers)
