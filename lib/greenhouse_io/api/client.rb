@@ -74,6 +74,10 @@ module GreenhouseIo
       get_from_harvest_api "/applications/#{id}/scheduled_interviews", options
     end
 
+    def job(id, options = {})
+      get("/jobs#{path_id(id)}", options, 'jobs')
+    end
+
     def jobs(id = nil, options = {})
       paginated_get("/jobs#{path_id(id)}", options, 'jobs')
     end
