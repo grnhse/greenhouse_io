@@ -75,7 +75,7 @@ module GreenhouseIo
     end
 
     def job(id, options = {})
-      get("/jobs#{path_id(id)}", options, 'jobs')
+      get_from_harvest_api("/jobs#{path_id(id)}", options, 'jobs')
     end
 
     def jobs(id = nil, options = {})
