@@ -67,7 +67,7 @@ module GreenhouseIo
     end
 
     def all_scorecards(id = nil, options = {})
-      get_from_harvest_api "/scorecards/#{id}", options
+      paginated_get "/scorecards/#{id}", options
     end
 
     def scheduled_interviews(id, options = {})
