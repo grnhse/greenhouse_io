@@ -34,8 +34,12 @@ module GreenhouseIo
       get_from_harvest_api "/departments#{path_id(id)}", options
     end
 
-    def candidates(id = nil, options = {})
-      paginated_get("/candidates#{path_id(id)}", options, 'candidates')
+    def candidate(id, options = {})
+      get_from_harvest_api("/candidates/#{id}", options)
+    end
+
+    def candidates(options = {})
+      paginated_get("/candidates", options, 'candidates')
     end
 
     def activity_feed(id, options = {})
@@ -63,6 +67,7 @@ module GreenhouseIo
     end
 
     def scorecards(id, options = {})
+      # paginated_get("/applications/#{id}/scorecards")
       get_from_harvest_api "/applications/#{id}/scorecards", options
     end
 
@@ -122,7 +127,10 @@ module GreenhouseIo
 
       loop do
         params[:page] = page
+        p "fetching page #{page}"
+
         response = get_from_harvest_api(url, params, endpoint)
+        p "response size: #{response.size}"
 
         results.concat(response)
 
