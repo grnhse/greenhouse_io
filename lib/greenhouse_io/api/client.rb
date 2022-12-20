@@ -3,12 +3,12 @@ module GreenhouseIo
     include HTTMultiParty
     include GreenhouseIo::API
 
-    PERMITTED_OPTIONS = [:page, :per_page, :job_id]
+    PERMITTED_OPTIONS = [:page, :per_page, :job_id, :updated_after, :created_after]
     PERMITTED_OPTIONS_PER_ENDPOINT = {
-      'candidates' => [:email, :updated_after],
-      'offers' => [:status, :resolved_at, :updated_after],
+      'candidates' => [:email],
+      'offers' => [:status, :resolved_at],
       'jobs' => [:status],
-      'job_posts' => [:active, :live, :created_after]
+      'job_posts' => [:active, :live],
     }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
@@ -54,8 +54,12 @@ module GreenhouseIo
       )
     end
 
-    def applications(id = nil, options = {})
+    def application(id = nil, options = {})
       get_from_harvest_api "/applications#{path_id(id)}", options
+    end
+
+    def applications( options = {})
+      paginated_get "/applications", options
     end
 
     def offers_for_application(id, options = {})
@@ -83,8 +87,8 @@ module GreenhouseIo
       get_from_harvest_api("/jobs#{path_id(id)}", options, 'jobs')
     end
 
-    def jobs(id = nil, options = {})
-      paginated_get("/jobs#{path_id(id)}", options, 'jobs')
+    def jobs(options = {})
+      paginated_get("/jobs", options, 'jobs')
     end
 
     def stages(id, options = {})
