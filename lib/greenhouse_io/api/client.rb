@@ -5,10 +5,11 @@ module GreenhouseIo
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id, :created_before, :created_after, :updated_after, :updated_before, :last_activity_after, :status, :candidate_ids ]
 
-    attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link, :logger
+    attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link, :logger, :timeout
     base_uri 'https://harvest.greenhouse.io/v1'
 
-    def initialize(api_token = nil)
+    def initialize(api_token = nil, timeout: nil)
+      @timeout = timeout
       @api_token = api_token || GreenhouseIo.configuration.api_token
     end
 
@@ -226,6 +227,10 @@ module GreenhouseIo
         :query => permitted_options(options),
         :basic_auth => basic_auth,
       }
+      if @timeout
+        httparty_options[:timeout] = @timeout
+      end
+
       response = get_response(url, httparty_options)
 
       set_headers_info(response.headers)
