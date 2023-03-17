@@ -92,7 +92,7 @@ module GreenhouseIo
     end
 
     def create_job(options = {})
-      post_to_harvest_api('jobs', options, {})
+      post_to_harvest_api('/jobs', options, {})
     end
 
     def stages(id, options = {})
