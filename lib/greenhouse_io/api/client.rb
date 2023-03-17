@@ -7,7 +7,7 @@ module GreenhouseIo
     PERMITTED_OPTIONS_PER_ENDPOINT = {
       'candidates' => [:email],
       'offers' => [:status, :resolved_at],
-      'jobs' => [:status],
+      'jobs' => [:status, :department_id],
       'job_posts' => [:active, :live],
     }
 
