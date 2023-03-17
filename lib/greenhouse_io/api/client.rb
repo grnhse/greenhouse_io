@@ -91,6 +91,10 @@ module GreenhouseIo
       paginated_get("/jobs", options, 'jobs')
     end
 
+    def create_job(options = {})
+      post_to_harvest_api('jobs', options, {})
+    end
+
     def stages(id, options = {})
       get_from_harvest_api "/jobs/#{id}/stages", options
     end
