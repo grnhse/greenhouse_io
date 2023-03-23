@@ -108,8 +108,12 @@ module GreenhouseIo
       get_from_harvest_api('/job_posts', options, 'job_posts')
     end
 
-    def users(id = nil, options = {})
-      get_from_harvest_api "/users#{path_id(id)}", options
+    def user(id_or_email, options = {})
+      get_from_harvest_api("/users#{path_id(id)}", options)
+    end
+
+    def users(options = {})
+      paginated_get("/users", options)
     end
 
     def sources(id = nil, options = {})
