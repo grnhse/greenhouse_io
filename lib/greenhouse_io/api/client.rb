@@ -9,6 +9,7 @@ module GreenhouseIo
       'offers' => [:status, :resolved_at],
       'jobs' => [:status, :department_id],
       'job_posts' => [:active, :live],
+      'users' => [:user_attributes]
     }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
