@@ -116,6 +116,10 @@ module GreenhouseIo
       paginated_get("/users", options)
     end
 
+    def user_job_permissions(user_id)
+      paginated_get("/users/#{user_id}/permissions/jobs")
+    end
+
     def sources(id = nil, options = {})
       get_from_harvest_api "/sources#{path_id(id)}", options
     end
