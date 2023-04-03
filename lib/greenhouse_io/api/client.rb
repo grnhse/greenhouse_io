@@ -117,7 +117,7 @@ module GreenhouseIo
     end
 
     def users(options = {})
-      paginated_get("/users", options)
+      paginated_get("/users", options, 'users')
     end
 
     def user_job_permissions(user_id)
