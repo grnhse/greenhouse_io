@@ -9,7 +9,7 @@ module GreenhouseIo
       'offers' => [:status, :resolved_at],
       'jobs' => [:status, :department_id],
       'job_posts' => [:active, :live],
-      'users' => [:user_attributes]
+      'users' => [:user_attributes, :email]
     }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
@@ -113,7 +113,7 @@ module GreenhouseIo
     end
 
     def user(id_or_email, options = {})
-      get_from_harvest_api("/users#{path_id(id)}", options)
+      get_from_harvest_api("/users#{path_id(id_or_email)}", options)
     end
 
     def users(options = {})
