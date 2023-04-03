@@ -96,6 +96,10 @@ module GreenhouseIo
       post_to_harvest_api('/jobs', options, headers)
     end
 
+    def add_hiring_team(job_req_id, options = {})
+      post_to_harvest_api("/jobs/#{job_req_id}/hiring_team", options, {})
+    end
+
     def stages(id, options = {})
       get_from_harvest_api "/jobs/#{id}/stages", options
     end
