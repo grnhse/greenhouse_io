@@ -117,6 +117,8 @@ module GreenhouseIo
     end
 
     def users(options = {})
+      return get_from_harvest_api("/users", options) if options.has_key?(:email) # we don't want pagination, we only care about one user
+
       paginated_get("/users", options, 'users')
     end
 
