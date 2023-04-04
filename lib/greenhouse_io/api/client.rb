@@ -168,6 +168,7 @@ module GreenhouseIo
     def get_from_harvest_api(url, options = {}, endpoint = nil)
       all_permitted_options = permitted_options(options)
       all_permitted_options.merge!(permitted_options_for_endpoint(options, endpoint)) if endpoint
+      p all_permitted_options
 
       response = get_response(url, {
         :query => all_permitted_options,
