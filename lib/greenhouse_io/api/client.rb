@@ -1,3 +1,6 @@
+require 'uri'
+require 'net/http'
+
 module GreenhouseIo
   class Client
     include HTTMultiParty
@@ -130,6 +133,10 @@ module GreenhouseIo
       get_from_harvest_api "/sources#{path_id(id)}", options
     end
 
+    def assign_job_permissions(user_id, options = {}, headers = {})
+      put_from_harvest_api("/users/#{user_id}/permissions/jobs", options, headers)
+    end
+
     private
 
     def path_id(id = nil)
@@ -155,6 +162,7 @@ module GreenhouseIo
         response = get_from_harvest_api(url, params, endpoint)
         p "response size: #{response.size}"
 
+
         results.concat(response)
 
         page+=1
@@ -179,6 +187,27 @@ module GreenhouseIo
 
       raise GreenhouseIo::Error.new(response.code) unless response.code == 200
       return parse_json(response)
+    end
+
+    def put_from_harvest_api(url, body, headers)
+      p 'in put with'
+      p url
+
+      uri = URI.parse("https://harvest.greenhouse.io/v1#{url}")
+      request = Net::HTTP::Put.new(uri)
+      headers.each { |key, value| request[key] = value }
+      request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
+      request.body = JSON.dump(body)
+      req_options = { use_ssl: uri.scheme == "https"}
+      response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request)}
+
+      p response.code
+      if response.code == "200" || response.code == "201" || response.code == "204"
+        return response.code
+      else
+        p response.body
+        raise GreenhouseIo::Error.new(response.code)
+      end
     end
 
     def post_to_harvest_api(url, body, headers)
