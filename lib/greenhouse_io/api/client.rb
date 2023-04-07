@@ -166,7 +166,7 @@ module GreenhouseIo
         results.concat(response)
 
         page+=1
-        break if response.size == 0
+        break if response.size < 100
       end
 
       results
