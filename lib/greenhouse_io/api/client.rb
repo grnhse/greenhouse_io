@@ -134,7 +134,15 @@ module GreenhouseIo
     end
 
     def assign_job_permissions(user_id, options = {}, headers = {})
-      put_from_harvest_api("/users/#{user_id}/permissions/jobs", options, headers)
+      put_to_harvest_api("/users/#{user_id}/permissions/jobs", options, headers)
+    end
+
+    def job_approvals(job_id)
+      get_from_harvest_api("/jobs/#{job_id}/approval_flows")
+    end
+
+    def update_job_approvals(job_id, options = {}, headers = {})
+      put_to_harvest_api("jobs/#{job_id}/approval_flows", options, headers)
     end
 
     private
@@ -189,10 +197,7 @@ module GreenhouseIo
       return parse_json(response)
     end
 
-    def put_from_harvest_api(url, body, headers)
-      p 'in put with'
-      p url
-
+    def put_to_harvest_api(url, body, headers)
       uri = URI.parse("https://harvest.greenhouse.io/v1#{url}")
       request = Net::HTTP::Put.new(uri)
       headers.each { |key, value| request[key] = value }
@@ -201,11 +206,9 @@ module GreenhouseIo
       req_options = { use_ssl: uri.scheme == "https"}
       response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request)}
 
-      p response.code
       if response.code == "200" || response.code == "201" || response.code == "204"
         return response.code
       else
-        p response.body
         raise GreenhouseIo::Error.new(response.code)
       end
     end
