@@ -64,7 +64,7 @@ module GreenhouseIo
     end
 
     def applications( options = {})
-      paginated_get "/applications", options
+      paginated_get "/applications", options, 'applications'
     end
 
     def offers_for_application(id, options = {})
