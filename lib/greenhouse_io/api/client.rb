@@ -10,7 +10,7 @@ module GreenhouseIo
     PERMITTED_OPTIONS_PER_ENDPOINT = {
       'candidates' => [:email],
       'offers' => [:status, :resolved_at],
-      'jobs' => [:status, :department_id],
+      'jobs' => [:status, :department_id, :requisition_id],
       'job_posts' => [:active, :live],
       'users' => [:user_attributes, :email],
       'applications' => [:last_activity_after]
@@ -102,6 +102,10 @@ module GreenhouseIo
 
     def add_hiring_team(job_req_id, options = {}, headers = {})
       post_to_harvest_api("/jobs/#{job_req_id}/hiring_team", options, headers)
+    end
+
+    def update_hiring_team(job_req_id, options = {}, headers = {})
+      put_to_harvest_api("/jobs/#{job_req_id}/hiring_team", options, headers)
     end
 
     def stages(id, options = {})
