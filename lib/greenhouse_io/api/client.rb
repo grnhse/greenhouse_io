@@ -108,12 +108,24 @@ module GreenhouseIo
       put_to_harvest_api("/jobs/#{job_req_id}/hiring_team", options, headers)
     end
 
+    def get_hiring_team(job_req_id, options = {active: true})
+      get_from_harvest_api("/jobs/#{job_req_id}/hiring_team", options)
+    end
+
     def stages(id, options = {})
       get_from_harvest_api "/jobs/#{id}/stages", options
     end
 
+    def job_posts_for_job(id, options = {})
+      get_from_harvest_api "/jobs/#{id}/job_posts", options
+    end
+
     def job_post(id, options = {})
       get_from_harvest_api "/jobs/#{id}/job_post", options
+    end
+
+    def job_openings(id, options = {})
+      get_from_harvest_api "/jobs/#{id}/openings", options
     end
 
     def job_posts(options = {})
@@ -140,6 +152,10 @@ module GreenhouseIo
 
     def assign_job_permissions(user_id, options = {}, headers = {})
       put_to_harvest_api("/users/#{user_id}/permissions/jobs", options, headers)
+    end
+
+    def delete_job_permissions(user_id, options = {}, headers = {})
+      delete_from_harvest_api("/users/#{user_id}/permissions/jobs", options, headers)
     end
 
     def job_approvals(job_id)
@@ -173,9 +189,6 @@ module GreenhouseIo
         p "fetching page #{page}"
 
         response = get_from_harvest_api(url, params, endpoint)
-        p "response size: #{response.size}"
-
-
         results.concat(response)
 
         page+=1
@@ -220,6 +233,23 @@ module GreenhouseIo
 
     def post_to_harvest_api(url, body, headers)
       response = post_response(url, {
+        :body => JSON.dump(body),
+        :basic_auth => basic_auth,
+        :headers => headers
+      })
+
+      set_headers_info(response.headers)
+
+      if response.code == 200 || response.code == 201
+        parse_json(response)
+      else
+        p response
+        raise GreenhouseIo::Error.new(response.code)
+      end
+    end
+
+    def delete_from_harvest_api(url, body, headers)
+      response = delete_response(url, {
         :body => JSON.dump(body),
         :basic_auth => basic_auth,
         :headers => headers
