@@ -8,7 +8,7 @@ module GreenhouseIo
 
     PERMITTED_OPTIONS = [:page, :per_page, :job_id, :updated_after, :created_after]
     PERMITTED_OPTIONS_PER_ENDPOINT = {
-      'candidates' => [:email],
+      'candidates' => [:email, :job_id],
       'offers' => [:status, :resolved_at],
       'jobs' => [:status, :department_id, :requisition_id],
       'job_posts' => [:active, :live],
@@ -117,7 +117,7 @@ module GreenhouseIo
     end
 
     def job_posts_for_job(id, options = {})
-      get_from_harvest_api "/jobs/#{id}/job_posts", options
+      get_from_harvest_api "/jobs/#{id}/job_posts", options, 'job_posts'
     end
 
     def job_post(id, options = {})
