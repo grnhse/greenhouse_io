@@ -13,7 +13,7 @@ module GreenhouseIo
       'jobs' => [:status, :department_id, :requisition_id],
       'job_posts' => [:active, :live],
       'users' => [:user_attributes, :email],
-      'applications' => [:last_activity_after, :status]
+      'applications' => [:last_activity_after, :status, :job_id]
     }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
