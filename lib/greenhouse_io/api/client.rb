@@ -128,6 +128,10 @@ module GreenhouseIo
       get_from_harvest_api "/jobs/#{id}/openings", options
     end
 
+    def add_job_opening(id, options = {}, headers = {})
+      post_to_harvest_api("/jobs/#{id}/openings", options, headers)
+    end
+
     def job_posts(options = {})
       get_from_harvest_api('/job_posts', options, 'job_posts')
     end
