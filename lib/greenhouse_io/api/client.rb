@@ -13,7 +13,8 @@ module GreenhouseIo
       'jobs' => [:status, :department_id, :requisition_id],
       'job_posts' => [:active, :live],
       'users' => [:user_attributes, :email],
-      'applications' => [:last_activity_after, :status, :job_id]
+      'applications' => [:last_activity_after, :status, :job_id],
+      'scheduled_interviews' => [:starts_after, :starts_before, :ends_after, :ends_before],
     }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
@@ -85,7 +86,7 @@ module GreenhouseIo
     end
 
     def scheduled_interviews(options = {})
-      get_from_harvest_api "/scheduled_interviews", options
+      get_from_harvest_api "/scheduled_interviews", options, 'scheduled_interviews'
     end
 
     def job(id, options = {})
