@@ -84,7 +84,7 @@ module GreenhouseIo
       paginated_get "/scorecards/#{id}", options
     end
 
-    def scheduled_interviews(id, options = {})
+    def scheduled_interviews(options = {})
       get_from_harvest_api "/scheduled_interviews", options
     end
 
