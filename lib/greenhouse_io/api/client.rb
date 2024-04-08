@@ -102,7 +102,7 @@ module GreenhouseIo
     end
 
     def update_job(id, options = {}, headers = {})
-      put_to_harvest_api("/jobs/#{id}", options, headers)
+      patch_to_harvest_api("/jobs/#{id}", options, headers)
     end
 
     def add_hiring_team(job_req_id, options = {}, headers = {})
@@ -227,6 +227,22 @@ module GreenhouseIo
     def put_to_harvest_api(url, body, headers)
       uri = URI.parse("https://harvest.greenhouse.io/v1#{url}")
       request = Net::HTTP::Put.new(uri)
+      headers.each { |key, value| request[key] = value }
+      request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
+      request.body = JSON.dump(body)
+      req_options = { use_ssl: uri.scheme == "https"}
+      response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request)}
+
+      if response.code == "200" || response.code == "201" || response.code == "204"
+        return response.code
+      else
+        raise GreenhouseIo::Error.new(response.code)
+      end
+    end
+
+    def patch_to_harvest_api(url, body, headers)
+      uri = URI.parse("https://harvest.greenhouse.io/v1#{url}")
+      request = Net::HTTP::Patch.new(uri)
       headers.each { |key, value| request[key] = value }
       request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
       request.body = JSON.dump(body)
