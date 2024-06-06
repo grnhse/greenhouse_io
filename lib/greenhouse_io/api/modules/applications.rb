@@ -1,14 +1,14 @@
-require_relative '../request'
-
 module GreenhouseIo
   module Applications
-    include GreenhouseIo::Request
 
-    # list applications
-    # GET https://harvest.greenhouse.io/v1/applications
+    def applications(options = {})
+      paginated_get("/applications", options, 'applications')
+    end
 
-    # get application
-    # GET https://harvest.greenhouse.io/v1/applications/{id}
+    def application(id = nil, options = {})
+      p "loading application path: /applications#{path_id(id)}"
+      get_from_harvest_api("/applications#{path_id(id)}", options)
+    end
 
     # delete applications
     # DELETE https://harvest.greenhouse.io/v1/applications/{id}
@@ -21,7 +21,5 @@ module GreenhouseIo
 
     # update applications
     # PATCH https://harvest.greenhouse.io/v1/applications/{id}
-
   end
 end
-
