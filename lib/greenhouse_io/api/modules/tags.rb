@@ -9,8 +9,8 @@ module GreenhouseIo
 
     # get the tags associated with a specific candidate
     # GET https://harvest.greenhouse.io/v1/candidates/{id}/tags
-    def candidate_tags(id = nil, options = {})
-      get_from_harvest_api("/candidates#{path_id(id)}/tags", options)
+    def candidate_tags(candidate_id= nil, options = {})
+      get_from_harvest_api("/candidates#{path_id(candidate_id)}/tags", options)
     end
 
     # add new tag value
@@ -35,8 +35,8 @@ module GreenhouseIo
 
     # delete specific tag from candidate section
     # DELETE 'https://harvest.greenhouse.io/v1/tags/candidate/{tag id}
-    def delete_tags(id = nil)
-      delete_from_harvest_api("/candidate#{path_id(id)}", {})
+    def delete_tags(tag_id = nil)
+      delete_from_harvest_api("/tags/candidate#{path_id(tag_id)}", {})
     end
   end
 end
