@@ -6,10 +6,12 @@ require 'httmultiparty'
 require_relative '../api'
 require_relative 'modules/applications'
 require_relative 'modules/candidates'
+require_relative 'modules/custom_fields'
 require_relative 'modules/jobs'
 require_relative 'modules/offers'
-# require_relative 'modules/prospects'
-# require_relative 'modules/scorecards'
+require_relative 'modules/prospects'
+require_relative 'modules/scorecards'
+require_relative 'modules/tags'
 
 module GreenhouseIo
   class Client
@@ -17,10 +19,12 @@ module GreenhouseIo
     include GreenhouseIo::API
     include GreenhouseIo::Applications
     include GreenhouseIo::Candidates
+    include GreenhouseIo::CustomFields
     include GreenhouseIo::Jobs
     include GreenhouseIo::Offers
-    # include GreenhouseIo::Prospects
-    # include GreenhouseIo::Scorecards
+    include GreenhouseIo::Prospects
+    include GreenhouseIo::Scorecards
+    include GreenhouseIo::Tags
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
 
@@ -55,32 +59,32 @@ module GreenhouseIo
       handle_response(response)
     end
 
-    def patch_to_harvest_api(url, body, headers)
-      uri = URI.parse(base_uri)
-      request = Net::HTTP::Patch.new(uri)
-      headers.each { |key, value| request[key] = value }
-      request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
-      request.body = JSON.dump(body)
-      req_options = { use_ssl: uri.scheme == "https"}
-      response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request)}
+    # def patch_to_harvest_api(url, body, headers)
+    #   uri = URI.parse(base_uri)
+    #   request = Net::HTTP::Patch.new(uri)
+    #   headers.each { |key, value| request[key] = value }
+    #   request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
+    #   request.body = JSON.dump(body)
+    #   req_options = { use_ssl: uri.scheme == "https"}
+    #   response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request)}
 
+    #   handle_response(response)
+    # end
+
+    def put_to_harvest_api(url, body, headers)
+      response = self.class.put(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
 
-    # def put_to_harvest_api(url, body, headers)
-    #   response = self.class.put(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
-    #   handle_response(response)
-    # end
+    def patch_to_harvest_api(url, body, headers)
+      response = self.class.patch(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
+      handle_response(response)
+    end
 
-    # def patch_to_harvest_api(url, body, headers)
-    #   response = self.class.patch(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
-    #   handle_response(response)
-    # end
-
-    # def delete_from_harvest_api(url, body, headers)
-    #   response = self.class.delete(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
-    #   handle_response(response)
-    # end
+    def delete_from_harvest_api(url, body)
+      response = self.class.delete(url, body: JSON.dump(body), basic_auth: auth_details)
+      handle_response(response)
+    end
 
     def auth_details
       { username: @api_token, password: '' }
