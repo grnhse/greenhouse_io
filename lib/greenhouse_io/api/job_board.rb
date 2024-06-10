@@ -1,5 +1,5 @@
 module GreenhouseIo
-  class JobBoards
+  class JobBoard
     include HTTMultiParty
     include GreenhouseIo::API
     attr_accessor :api_token, :organization

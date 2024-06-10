@@ -10,7 +10,7 @@ module GreenhouseIo
     end
 
     def candidate_activity_feed(candidate_id = nil, options = {})
-      get_from_harvest_api "/candidates#{path_id(candidate_id)}/activity_feed", options
+      get_from_harvest_api("/candidates#{path_id(candidate_id)}/activity_feed", options)
     end
 
     def create_candidate(candidate_hash = {}, on_behalf_of)
