@@ -175,6 +175,14 @@ module GreenhouseIo
       put_to_harvest_api("jobs/#{job_id}/approval_flows", options, headers)
     end
 
+    def update_user(options = {}, headers = {})
+      patch_to_harvest_api("/users/", options, headers, true)
+    end
+
+    def custom_fields(resource_type)
+      paginated_get("/custom_fields/#{resource_type}")
+    end
+
     private
 
     def path_id(id = nil)
@@ -226,6 +234,7 @@ module GreenhouseIo
 
     def put_to_harvest_api(url, body, headers)
       uri = URI.parse("https://harvest.greenhouse.io/v1#{url}")
+
       request = Net::HTTP::Put.new(uri)
       headers.each { |key, value| request[key] = value }
       request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
@@ -236,12 +245,15 @@ module GreenhouseIo
       if response.code == "200" || response.code == "201" || response.code == "204"
         return response.code
       else
+        p response.body
         raise GreenhouseIo::Error.new(response.code)
       end
     end
 
-    def patch_to_harvest_api(url, body, headers)
-      uri = URI.parse("https://harvest.greenhouse.io/v1#{url}")
+    def patch_to_harvest_api(url, body, headers, v2 = false)
+      uri = URI.parse("https://harvest.greenhouse.io/v1#{url}") unless v2
+      uri = URI.parse("https://harvest.greenhouse.io/v2#{url}") if v2
+      p uri
       request = Net::HTTP::Patch.new(uri)
       headers.each { |key, value| request[key] = value }
       request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
@@ -252,6 +264,7 @@ module GreenhouseIo
       if response.code == "200" || response.code == "201" || response.code == "204"
         return response.code
       else
+        p response.body
         raise GreenhouseIo::Error.new(response.code)
       end
     end
