@@ -15,6 +15,7 @@ module GreenhouseIo
       'users' => [:user_attributes, :email],
       'applications' => [:last_activity_after, :status, :job_id],
       'scheduled_interviews' => [:starts_after, :starts_before, :ends_after, :ends_before],
+      'scorecards' => [:updated_after, :skip_count],
     }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
@@ -82,7 +83,7 @@ module GreenhouseIo
     end
 
     def all_scorecards(id = nil, options = {})
-      paginated_get "/scorecards/#{id}", options
+      paginated_get "/scorecards/#{id}", options, 'scorecards'
     end
 
     def scheduled_interviews(options = {})
