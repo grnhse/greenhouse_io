@@ -2,6 +2,7 @@ require 'uri'
 require 'net/http'
 require 'json'
 require 'httmultiparty'
+require 'pry'
 
 require_relative '../api'
 require_relative 'modules/applications'
@@ -40,21 +41,27 @@ module GreenhouseIo
       'applications' => [:last_activity_after, :status, :job_id],
     }
 
-    # base_uri 'https://harvest.greenhouse.io/v1'
-    base_uri 'http://localhost:8080'
+    # Set the default base URI
+    base_uri 'https://harvest.greenhouse.io/v1'
+    # base_uri 'http://localhost:8080'
 
-    # def base_uri(uri)
-    #   base_uri = uri ? uri : 'https://harvest.greenhouse.io/v1'
-    # end
+    # Define a method to change the base_uri
+    def self.set_base_uri(uri)
+      self.base_uri uri
+    end
 
     # private
 
     def get_from_harvest_api(url, options = {})
+      puts "GET request from URL: #{self.class.base_uri + url}, BODY: #{body}"
+      # binding.pry
       response = self.class.get(url, query: permitted_options(options), basic_auth: auth_details)
       handle_response(response)
     end
 
     def post_to_harvest_api(url, body, headers)
+      puts "POST request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
+      # binding.pry
       response = self.class.post(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
@@ -72,17 +79,23 @@ module GreenhouseIo
     # end
 
     def put_to_harvest_api(url, body, headers)
+      puts "PUT request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
       response = self.class.put(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
+      # binding.pry
       handle_response(response)
     end
 
     def patch_to_harvest_api(url, body, headers)
+      puts "PATCH request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
+      binding.pry
       response = self.class.patch(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
 
     def delete_from_harvest_api(url, body)
+      puts "DELETE request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
       response = self.class.delete(url, body: JSON.dump(body), basic_auth: auth_details)
+      # binding.pry
       handle_response(response)
     end
 
@@ -103,6 +116,7 @@ module GreenhouseIo
     end
 
     def permitted_options(options)
+      return nil if options.empty?
       options.select { |key, _value| PERMITTED_OPTIONS.include? key }
     end
 
