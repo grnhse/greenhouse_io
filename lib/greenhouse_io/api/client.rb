@@ -14,7 +14,7 @@ module GreenhouseIo
       'job_posts' => [:active, :live],
       'users' => [:user_attributes, :email],
       'applications' => [:last_activity_after, :status, :job_id],
-      'scheduled_interviews' => [:starts_after, :starts_before, :ends_after, :ends_before],
+      'scheduled_interviews' => [:starts_after, :starts_before, :ends_after, :ends_before, :updated_after],
       'scorecards' => [:updated_after, :skip_count],
     }
 
@@ -87,7 +87,7 @@ module GreenhouseIo
     end
 
     def scheduled_interviews(options = {})
-      get_from_harvest_api "/scheduled_interviews", options, 'scheduled_interviews'
+      paginated_get "/scheduled_interviews", options, 'scheduled_interviews'
     end
 
     def interview(id, options = {})
