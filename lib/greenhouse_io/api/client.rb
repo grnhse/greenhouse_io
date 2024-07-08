@@ -188,6 +188,10 @@ module GreenhouseIo
       paginated_get("/custom_fields/#{resource_type}")
     end
 
+    def job_stages(options = {})
+      paginated_get("/job_stages", options)
+    end
+
     private
 
     def path_id(id = nil)
