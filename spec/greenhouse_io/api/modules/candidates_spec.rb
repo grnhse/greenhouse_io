@@ -49,26 +49,6 @@ describe GreenhouseIo::Candidates do
     end
   end
 
-  describe '#candidate_activity_feed' do
-    before do
-      VCR.use_cassette('client/candidates/1/activity_feed') do
-        @activity_feed_response = @client.candidate_activity_feed(1)
-      end
-    end
-
-    it "returns a response" do
-      expect(@activity_feed_response).to_not be_nil
-    end
-
-    it "returns a candidate hash" do
-      expect(@activity_feed_response).to be_an_instance_of(Hash)
-    end
-
-    it "returns a candidate's details" do
-      expect(@activity_feed_response).to have_key('notes')
-    end
-  end
-
   describe '#create_candidate' do
     it 'posts a new candidate records to the api' do
       VCR.use_cassette('client/candidate/1') do

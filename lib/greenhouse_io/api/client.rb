@@ -53,7 +53,7 @@ module GreenhouseIo
     # private
 
     def get_from_harvest_api(url, options = {})
-      puts "GET request from URL: #{self.class.base_uri + url}, BODY: #{body}"
+      puts "GET request from URL: #{self.class.base_uri + url}, OPTIONS: #{options}"
       # binding.pry
       response = self.class.get(url, query: permitted_options(options), basic_auth: auth_details)
       handle_response(response)
