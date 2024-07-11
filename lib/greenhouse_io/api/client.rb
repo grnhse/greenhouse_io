@@ -13,6 +13,7 @@ require_relative 'modules/offers'
 require_relative 'modules/prospects'
 require_relative 'modules/scorecards'
 require_relative 'modules/tags'
+require_relative 'modules/users'
 
 module GreenhouseIo
   class Client
@@ -26,6 +27,7 @@ module GreenhouseIo
     include GreenhouseIo::Prospects
     include GreenhouseIo::Scorecards
     include GreenhouseIo::Tags
+    include GreenhouseIo::Users
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
 
@@ -54,14 +56,12 @@ module GreenhouseIo
 
     def get_from_harvest_api(url, options = {})
       puts "GET request from URL: #{self.class.base_uri + url}, OPTIONS: #{options}"
-      # binding.pry
       response = self.class.get(url, query: permitted_options(options), basic_auth: auth_details)
       handle_response(response)
     end
 
     def post_to_harvest_api(url, body, headers)
       puts "POST request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
-      # binding.pry
       response = self.class.post(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
@@ -81,13 +81,11 @@ module GreenhouseIo
     def put_to_harvest_api(url, body, headers)
       puts "PUT request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
       response = self.class.put(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
-      # binding.pry
       handle_response(response)
     end
 
     def patch_to_harvest_api(url, body, headers)
       puts "PATCH request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
-      binding.pry
       response = self.class.patch(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
@@ -95,12 +93,11 @@ module GreenhouseIo
     def delete_from_harvest_api(url, body)
       puts "DELETE request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
       response = self.class.delete(url, body: JSON.dump(body), basic_auth: auth_details)
-      # binding.pry
       handle_response(response)
     end
 
     def auth_details
-      { username: @api_token, password: '' }
+      { username: @api_token }
     end
 
     def handle_response(response)
