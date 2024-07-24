@@ -192,6 +192,10 @@ module GreenhouseIo
       paginated_get("/job_stages", options)
     end
 
+    def update_job_opening(job_id, opening_id, options = {}, headers = {})
+      patch_to_harvest_api("/jobs/#{job_id}/openings/#{opening_id}", options, headers)
+    end
+
     private
 
     def path_id(id = nil)
