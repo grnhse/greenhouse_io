@@ -14,6 +14,7 @@ require_relative 'modules/prospects'
 require_relative 'modules/scorecards'
 require_relative 'modules/tags'
 require_relative 'modules/users'
+require_relative 'modules/sources'
 
 module GreenhouseIo
   class Client
@@ -28,6 +29,7 @@ module GreenhouseIo
     include GreenhouseIo::Scorecards
     include GreenhouseIo::Tags
     include GreenhouseIo::Users
+    include GreenhouseIo::Sources
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
 

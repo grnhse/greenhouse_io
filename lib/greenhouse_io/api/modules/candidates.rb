@@ -21,6 +21,14 @@ module GreenhouseIo
       )
     end
 
+    def update_candidate(candidate_id, candidate_hash = {}, on_behalf_of)
+      patch_to_harvest_api(
+        "/candidates#{path_id(candidate_id)}",
+        candidate_hash,
+        { 'On-Behalf-Of' => on_behalf_of.to_s }
+      )
+    end
+
     def create_candidate_education(candidate_id = nil, education_hash = {}, on_behalf_of)
       post_to_harvest_api(
         "/candidates#{path_id(candidate_id)}/educations",
