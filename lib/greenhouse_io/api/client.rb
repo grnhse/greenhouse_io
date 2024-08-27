@@ -126,11 +126,9 @@ module GreenhouseIo
 
       loop do
         params[:page] = page
-        p "fetching page #{page}"
+        p "fetching page #{page} for url: #{url}"
 
         response = get_from_harvest_api(url, params)
-        p "response from paginated get #{response}"
-
         results.concat(response)
 
         page += 1
