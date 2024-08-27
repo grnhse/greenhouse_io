@@ -64,27 +64,27 @@ module GreenhouseIo
 
     def get_from_harvest_api(url, options = {})
       puts "GET request from URL: #{self.class.base_uri + url}, OPTIONS: #{options}"
-      response = self.class.get(url, query: permitted_options(options), headers: default_headers, basic_auth: auth_details)
+      response = self.class.get(url, query: permitted_options(options), basic_auth: auth_details)
       handle_response(response)
     end
 
     def post_to_harvest_api(url, body, headers = {})
-      puts "POST request to URL: #{self.class.base_uri + url}, BODY: #{body}"
       headers = default_headers.merge(headers)
+      puts "POST request to URL: #{self.class.base_uri + url}, BODY: #{body}, HEADER: #{headers}"
       response = self.class.post(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
 
     def put_to_harvest_api(url, body, headers = {})
-      puts "PUT request to URL: #{self.class.base_uri + url}, BODY: #{body}"
       headers = default_headers.merge(headers)
+      puts "PUT request to URL: #{self.class.base_uri + url}, BODY: #{body}, HEADER: #{headers}"
       response = self.class.put(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
 
     def patch_to_harvest_api(url, body, headers = {})
-      puts "PATCH request to URL: #{self.class.base_uri + url}, BODY: #{body}"
       headers = default_headers.merge(headers)
+      puts "PATCH request to URL: #{self.class.base_uri + url}, BODY: #{body}, HEADER: #{headers}"
       response = self.class.patch(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
@@ -129,6 +129,8 @@ module GreenhouseIo
         p "fetching page #{page}"
 
         response = get_from_harvest_api(url, params)
+        p "response from paginated get #{response}"
+
         results.concat(response)
 
         page += 1
