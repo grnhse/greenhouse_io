@@ -47,54 +47,51 @@ module GreenhouseIo
 
     # Set the default base URI
     base_uri 'https://harvest.greenhouse.io/v1'
-    # base_uri 'http://localhost:8080'
 
     # Define a method to change the base_uri
     def self.set_base_uri(uri)
       self.base_uri uri
     end
 
-    # private
+    private
+
+    def default_headers
+      {
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json'
+      }
+    end
 
     def get_from_harvest_api(url, options = {})
       puts "GET request from URL: #{self.class.base_uri + url}, OPTIONS: #{options}"
-      response = self.class.get(url, query: permitted_options(options), basic_auth: auth_details)
+      response = self.class.get(url, query: permitted_options(options), headers: default_headers, basic_auth: auth_details)
       handle_response(response)
     end
 
-    def post_to_harvest_api(url, body, headers)
-      puts "POST request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
+    def post_to_harvest_api(url, body, headers = {})
+      puts "POST request to URL: #{self.class.base_uri + url}, BODY: #{body}"
+      headers = default_headers.merge(headers)
       response = self.class.post(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
 
-    # def patch_to_harvest_api(url, body, headers)
-    #   uri = URI.parse(base_uri)
-    #   request = Net::HTTP::Patch.new(uri)
-    #   headers.each { |key, value| request[key] = value }
-    #   request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
-    #   request.body = JSON.dump(body)
-    #   req_options = { use_ssl: uri.scheme == "https"}
-    #   response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request)}
-
-    #   handle_response(response)
-    # end
-
-    def put_to_harvest_api(url, body, headers)
-      puts "PUT request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
+    def put_to_harvest_api(url, body, headers = {})
+      puts "PUT request to URL: #{self.class.base_uri + url}, BODY: #{body}"
+      headers = default_headers.merge(headers)
       response = self.class.put(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
 
-    def patch_to_harvest_api(url, body, headers)
-      puts "PATCH request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
+    def patch_to_harvest_api(url, body, headers = {})
+      puts "PATCH request to URL: #{self.class.base_uri + url}, BODY: #{body}"
+      headers = default_headers.merge(headers)
       response = self.class.patch(url, body: JSON.dump(body), headers: headers, basic_auth: auth_details)
       handle_response(response)
     end
 
     def delete_from_harvest_api(url, body)
-      puts "DELETE request to URL: #{self.class.base_uri + url}, BODY: #{body}"  # This will help confirm the full URL being requested
-      response = self.class.delete(url, body: JSON.dump(body), basic_auth: auth_details)
+      puts "DELETE request to URL: #{self.class.base_uri + url}, BODY: #{body}"
+      response = self.class.delete(url, body: JSON.dump(body), headers: default_headers, basic_auth: auth_details)
       handle_response(response)
     end
 
@@ -134,7 +131,7 @@ module GreenhouseIo
         response = get_from_harvest_api(url, params)
         results.concat(response)
 
-        page+=1
+        page += 1
         break if response.size < 100
       end
 
