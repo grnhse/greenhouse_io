@@ -2,7 +2,6 @@ require 'uri'
 require 'net/http'
 require 'json'
 require 'httmultiparty'
-require 'pry'
 
 require_relative '../api'
 require_relative 'modules/applications'
