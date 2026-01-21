@@ -14,12 +14,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/grnhse/greenhouse_io"
 
   spec.post_install_message = %q{
-    greenhouse_io will be removed from Rubygems.org on Friday, April 3, 2026.
-    Please install using a direct link to the Github repo:
-    
-    gem "greenhouse_io", git: "git@github.com:grnhse/greenhouse_io.git", branch: "master"
-
-    Additionally, Harvest V1/V2 will be decomissioned in August 2026.
+    WARNING: Additionally, Harvest V1/V2 will be decomissioned in August 2026.
   }
 
   spec.files         = `git ls-files`.split($/)

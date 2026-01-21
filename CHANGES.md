@@ -2,6 +2,12 @@
 
 This project follows [semantic versioning](http://semver.org/).  This changelog follows suggestions from [keepachangelog.com](http://keepachangelog.com/).
 
+## Version 2.5.2
+Released 2026-01-21.
+
+#### Changed
+- Edited post-install message
+
 ## Version 2.5.1
 Released 2026-01-21.
 
