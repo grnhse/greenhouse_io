@@ -2,6 +2,16 @@
 
 This project follows [semantic versioning](http://semver.org/).  This changelog follows suggestions from [keepachangelog.com](http://keepachangelog.com/).
 
+## Version 2.5.1
+Released 2026-01-21.
+
+#### Added
+- Post-install message directing users to directly source the gem from the [Github public repository](https://github.com/grnhse/greenhouse_io).
+- Notice for decomissioning of Harvest V1/V2, August 2026.
+
+#### Added
+- Added methods for retrieving offers for an application: `current_offer_for_application` and `offers_for_application`
+
 ## Version 2.5.0
 Released 2016-05-31.  Contributed by [@theshanx](https://github.com/theshanx).  Thanks!  :)
 
