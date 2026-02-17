@@ -1,9 +1,22 @@
+require 'uri'
+require 'net/http'
+
 module GreenhouseIo
   class Client
     include HTTMultiParty
     include GreenhouseIo::API
 
-    PERMITTED_OPTIONS = [:page, :per_page, :job_id]
+    PERMITTED_OPTIONS = [:page, :per_page, :job_id, :updated_after, :created_after]
+    PERMITTED_OPTIONS_PER_ENDPOINT = {
+      'candidates' => [:email, :job_id],
+      'offers' => [:status, :resolved_at],
+      'jobs' => [:status, :department_id, :requisition_id],
+      'job_posts' => [:active, :live],
+      'users' => [:user_attributes, :email],
+      'applications' => [:last_activity_after, :status, :job_id],
+      'scheduled_interviews' => [:starts_after, :starts_before, :ends_after, :ends_before, :updated_after],
+      'scorecards' => [:updated_after, :skip_count],
+    }
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
     base_uri 'https://harvest.greenhouse.io/v1'
@@ -16,16 +29,24 @@ module GreenhouseIo
       get_from_harvest_api "/offices#{path_id(id)}", options
     end
 
-    def offers(id = nil, options = {})
+    def offer(id, options = {})
       get_from_harvest_api "/offers#{path_id(id)}", options
+    end
+
+    def offers(options = {})
+      paginated_get("/offers", options)
     end
 
     def departments(id = nil, options = {})
       get_from_harvest_api "/departments#{path_id(id)}", options
     end
 
-    def candidates(id = nil, options = {})
-      get_from_harvest_api "/candidates#{path_id(id)}", options
+    def candidate(id, options = {})
+      get_from_harvest_api("/candidates/#{id}", options)
+    end
+
+    def candidates(options = {})
+      paginated_get("/candidates", options, 'candidates')
     end
 
     def activity_feed(id, options = {})
@@ -40,8 +61,12 @@ module GreenhouseIo
       )
     end
 
-    def applications(id = nil, options = {})
+    def application(id = nil, options = {})
       get_from_harvest_api "/applications#{path_id(id)}", options
+    end
+
+    def applications( options = {})
+      paginated_get "/applications", options, 'applications'
     end
 
     def offers_for_application(id, options = {})
@@ -53,35 +78,122 @@ module GreenhouseIo
     end
 
     def scorecards(id, options = {})
+      # paginated_get("/applications/#{id}/scorecards")
       get_from_harvest_api "/applications/#{id}/scorecards", options
     end
 
-    def all_scorecards(id = nil, options = {})
-      get_from_harvest_api "/scorecards/#{id}", options
+    def all_scorecards(options = {})
+      paginated_get "/scorecards", options, 'scorecards'
     end
 
-    def scheduled_interviews(id, options = {})
-      get_from_harvest_api "/applications/#{id}/scheduled_interviews", options
+    def scheduled_interviews(options = {})
+      paginated_get "/scheduled_interviews", options, 'scheduled_interviews'
     end
 
-    def jobs(id = nil, options = {})
-      get_from_harvest_api "/jobs#{path_id(id)}", options
+    def interview(id, options = {})
+      get_from_harvest_api "/scheduled_interviews/#{id}", options
+    end
+
+    def job(id, options = {})
+      get_from_harvest_api("/jobs#{path_id(id)}", options, 'jobs')
+    end
+
+    def jobs(options = {})
+      paginated_get("/jobs", options, 'jobs')
+    end
+
+    def create_job(options = {}, headers = {})
+      post_to_harvest_api('/jobs', options, headers)
+    end
+
+    def update_job(id, options = {}, headers = {})
+      patch_to_harvest_api("/jobs/#{id}", options, headers)
+    end
+
+    def add_hiring_team(job_req_id, options = {}, headers = {})
+      post_to_harvest_api("/jobs/#{job_req_id}/hiring_team", options, headers)
+    end
+
+    def update_hiring_team(job_req_id, options = {}, headers = {})
+      put_to_harvest_api("/jobs/#{job_req_id}/hiring_team", options, headers)
+    end
+
+    def get_hiring_team(job_req_id, options = {active: true})
+      get_from_harvest_api("/jobs/#{job_req_id}/hiring_team", options)
     end
 
     def stages(id, options = {})
       get_from_harvest_api "/jobs/#{id}/stages", options
     end
 
+    def job_posts_for_job(id, options = {})
+      get_from_harvest_api "/jobs/#{id}/job_posts", options, 'job_posts'
+    end
+
     def job_post(id, options = {})
       get_from_harvest_api "/jobs/#{id}/job_post", options
     end
 
-    def users(id = nil, options = {})
-      get_from_harvest_api "/users#{path_id(id)}", options
+    def job_openings(id, options = {})
+      get_from_harvest_api "/jobs/#{id}/openings", options
+    end
+
+    def add_job_opening(id, options = {}, headers = {})
+      post_to_harvest_api("/jobs/#{id}/openings", options, headers)
+    end
+
+    def job_posts(options = {})
+      get_from_harvest_api('/job_posts', options, 'job_posts')
+    end
+
+    def user(id_or_email, options = {})
+      get_from_harvest_api("/users#{path_id(id_or_email)}", options)
+    end
+
+    def users(options = {})
+      return get_from_harvest_api("/users", options, 'users') if options.has_key?(:email) # we don't want pagination, we only care about one user
+
+      paginated_get("/users", options, 'users')
+    end
+
+    def user_job_permissions(user_id)
+      paginated_get("/users/#{user_id}/permissions/jobs")
     end
 
     def sources(id = nil, options = {})
       get_from_harvest_api "/sources#{path_id(id)}", options
+    end
+
+    def assign_job_permissions(user_id, options = {}, headers = {})
+      put_to_harvest_api("/users/#{user_id}/permissions/jobs", options, headers)
+    end
+
+    def delete_job_permissions(user_id, options = {}, headers = {})
+      delete_from_harvest_api("/users/#{user_id}/permissions/jobs", options, headers)
+    end
+
+    def job_approvals(job_id)
+      get_from_harvest_api("/jobs/#{job_id}/approval_flows")
+    end
+
+    def update_job_approvals(job_id, options = {}, headers = {})
+      put_to_harvest_api("jobs/#{job_id}/approval_flows", options, headers)
+    end
+
+    def update_user(options = {}, headers = {})
+      patch_to_harvest_api("/users/", options, headers, true)
+    end
+
+    def custom_fields(resource_type)
+      paginated_get("/custom_fields/#{resource_type}")
+    end
+
+    def job_stages(options = {})
+      paginated_get("/job_stages", options)
+    end
+
+    def update_job_opening(job_id, opening_id, options = {}, headers = {})
+      patch_to_harvest_api("/jobs/#{job_id}/openings/#{opening_id}", options, headers)
     end
 
     private
@@ -94,17 +206,78 @@ module GreenhouseIo
       options.select { |key, value| PERMITTED_OPTIONS.include? key }
     end
 
-    def get_from_harvest_api(url, options = {})
+    def permitted_options_for_endpoint(options, endpoint)
+      options.select { |key, value| PERMITTED_OPTIONS_PER_ENDPOINT[endpoint].include? key }
+    end
+
+    def paginated_get(url, params = {}, endpoint = nil)
+      results = []
+      page = 1
+
+      loop do
+        params[:page] = page
+        p "fetching page #{page}"
+
+        response = get_from_harvest_api(url, params, endpoint)
+        results.concat(response)
+
+        page+=1
+        break if response.size < 100
+      end
+
+      results
+    end
+
+
+    def get_from_harvest_api(url, options = {}, endpoint = nil)
+      all_permitted_options = permitted_options(options)
+      all_permitted_options.merge!(permitted_options_for_endpoint(options, endpoint)) if endpoint
+      p all_permitted_options
+
       response = get_response(url, {
-        :query => permitted_options(options), 
+        :query => all_permitted_options,
         :basic_auth => basic_auth
       })
 
       set_headers_info(response.headers)
 
-      if response.code == 200
-        parse_json(response)
+      raise GreenhouseIo::Error.new(response.code) unless response.code == 200
+      return parse_json(response)
+    end
+
+    def put_to_harvest_api(url, body, headers)
+      uri = URI.parse("https://harvest.greenhouse.io/v1#{url}")
+
+      request = Net::HTTP::Put.new(uri)
+      headers.each { |key, value| request[key] = value }
+      request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
+      request.body = JSON.dump(body)
+      req_options = { use_ssl: uri.scheme == "https"}
+      response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request)}
+
+      if response.code == "200" || response.code == "201" || response.code == "204"
+        return response.code
       else
+        p response.body
+        raise GreenhouseIo::Error.new(response.code)
+      end
+    end
+
+    def patch_to_harvest_api(url, body, headers, v2 = false)
+      uri = URI.parse("https://harvest.greenhouse.io/v1#{url}") unless v2
+      uri = URI.parse("https://harvest.greenhouse.io/v2#{url}") if v2
+      p uri
+      request = Net::HTTP::Patch.new(uri)
+      headers.each { |key, value| request[key] = value }
+      request["Authorization"] = "Basic #{Base64.strict_encode64("#{api_token}:")}"
+      request.body = JSON.dump(body)
+      req_options = { use_ssl: uri.scheme == "https"}
+      response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request)}
+
+      if response.code == "200" || response.code == "201" || response.code == "204"
+        return response.code
+      else
+        p response.body
         raise GreenhouseIo::Error.new(response.code)
       end
     end
@@ -118,9 +291,27 @@ module GreenhouseIo
 
       set_headers_info(response.headers)
 
-      if response.code == 200
+      if response.code == 200 || response.code == 201
         parse_json(response)
       else
+        p response
+        raise GreenhouseIo::Error.new(response.code)
+      end
+    end
+
+    def delete_from_harvest_api(url, body, headers)
+      response = delete_response(url, {
+        :body => JSON.dump(body),
+        :basic_auth => basic_auth,
+        :headers => headers
+      })
+
+      set_headers_info(response.headers)
+
+      if response.code == 200 || response.code == 201
+        parse_json(response)
+      else
+        p response
         raise GreenhouseIo::Error.new(response.code)
       end
     end
